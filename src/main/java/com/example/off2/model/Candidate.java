@@ -82,14 +82,13 @@ public class Candidate {
 
     @Column(name = "full_name")
     private String fullName;
-
     private String email;
     private String phone;
     private String gender;
     private String state;
     private String city;
     private String aadhaar;
-
+    
     @Column(name = "bank_account")
     private String bankAccount;
 

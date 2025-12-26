@@ -33,49 +33,6 @@
 //     }
 // }
 
-
-// package com.example.off2.controller;
-
-// import com.example.off2.model.Candidate;
-// import com.example.off2.model.Title;
-// import com.example.off2.repository.CandidateRepository;
-// import com.example.off2.repository.TitleRepository;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.web.bind.annotation.*;
-
-// import java.util.Optional;
-
-// @RestController
-// @RequestMapping("/candidates")
-// public class CandidateController {
-
-//     @Autowired
-//     private CandidateRepository candidateRepository;
-
-//     @Autowired
-//     private TitleRepository titleRepository;
-
-//     @PostMapping
-//     public Candidate addCandidate(@RequestBody CandidateRequest request) {
-//         Candidate candidate = new Candidate();
-//         candidate.setFullName(request.getFullName());
-//         candidate.setEmail(request.getEmail());
-//         candidate.setPhone(request.getPhone());
-//         candidate.setDob(request.getDob());
-//         candidate.setGender(request.getGender());
-//         candidate.setState(request.getState());
-//         candidate.setCity(request.getCity());
-//         candidate.setAadhaar(request.getAadhaar());
-//         candidate.setBankAccount(request.getBankAccount());
-
-//         // Fetch Title entity by ID
-//         Optional<Title> titleOpt = titleRepository.findById(request.getTitleId());
-//         titleOpt.ifPresent(candidate::setTitle);
-
-//         return candidateRepository.save(candidate);
-//     }
-// }
-
 package com.example.off2.controller;
 
 import com.example.off2.model.Candidate;
