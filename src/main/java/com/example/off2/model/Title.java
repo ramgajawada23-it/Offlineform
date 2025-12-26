@@ -83,7 +83,7 @@ import jakarta.persistence.*;
 @Table(name = "title_master")
 public class Title {
 
-    public Title() {} // 🔥 REQUIRED
+    public Title() {} 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
