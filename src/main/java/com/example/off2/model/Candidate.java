@@ -40,7 +40,7 @@ public class Candidate {
     @JsonManagedReference
     private List<FamilyMember> familyMembers;
 
-    // ===== GETTERS & SETTERS =====
+    // ===== Getters & Setters =====
 
     public Long getId() {
         return id;
@@ -57,7 +57,7 @@ public class Candidate {
     public String getEmail() {
         return email;
     }
-    
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -65,7 +65,7 @@ public class Candidate {
     public String getPhone() {
         return phone;
     }
-    
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
@@ -73,7 +73,7 @@ public class Candidate {
     public String getGender() {
         return gender;
     }
-    
+
     public void setGender(String gender) {
         this.gender = gender;
     }
@@ -81,7 +81,7 @@ public class Candidate {
     public String getState() {
         return state;
     }
-    
+
     public void setState(String state) {
         this.state = state;
     }
@@ -89,7 +89,7 @@ public class Candidate {
     public String getCity() {
         return city;
     }
-    
+
     public void setCity(String city) {
         this.city = city;
     }
@@ -97,7 +97,7 @@ public class Candidate {
     public String getAadhaar() {
         return aadhaar;
     }
-    
+
     public void setAadhaar(String aadhaar) {
         this.aadhaar = aadhaar;
     }
@@ -105,7 +105,7 @@ public class Candidate {
     public String getBankAccount() {
         return bankAccount;
     }
-    
+
     public void setBankAccount(String bankAccount) {
         this.bankAccount = bankAccount;
     }
@@ -113,7 +113,7 @@ public class Candidate {
     public LocalDate getDob() {
         return dob;
     }
-    
+
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
@@ -121,7 +121,7 @@ public class Candidate {
     public Title getTitle() {
         return title;
     }
-    
+
     public void setTitle(Title title) {
         this.title = title;
     }
@@ -132,6 +132,7 @@ public class Candidate {
 
     public void setFamilyMembers(List<FamilyMember> familyMembers) {
         this.familyMembers = familyMembers;
+
         if (familyMembers != null) {
             familyMembers.forEach(f -> f.setCandidate(this));
         }

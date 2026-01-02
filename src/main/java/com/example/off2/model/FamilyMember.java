@@ -24,7 +24,7 @@ public class FamilyMember {
     @JsonBackReference
     private Candidate candidate;
 
-    // ===== GETTERS & SETTERS =====
+    // ===== Getters & Setters =====
 
     public Long getId() {
         return id;
@@ -33,7 +33,7 @@ public class FamilyMember {
     public String getRelationship() {
         return relationship;
     }
-    
+
     public void setRelationship(String relationship) {
         this.relationship = relationship;
     }
@@ -41,7 +41,7 @@ public class FamilyMember {
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -49,7 +49,7 @@ public class FamilyMember {
     public LocalDate getDob() {
         return dob;
     }
-    
+
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
@@ -57,7 +57,7 @@ public class FamilyMember {
     public String getDependent() {
         return dependent;
     }
-    
+
     public void setDependent(String dependent) {
         this.dependent = dependent;
     }
@@ -65,7 +65,7 @@ public class FamilyMember {
     public String getOccupation() {
         return occupation;
     }
-    
+
     public void setOccupation(String occupation) {
         this.occupation = occupation;
     }
@@ -73,7 +73,7 @@ public class FamilyMember {
     public Double getIncome() {
         return income;
     }
-    
+
     public void setIncome(Double income) {
         this.income = income;
     }
@@ -81,7 +81,7 @@ public class FamilyMember {
     public Candidate getCandidate() {
         return candidate;
     }
-    
+
     public void setCandidate(Candidate candidate) {
         this.candidate = candidate;
     }
