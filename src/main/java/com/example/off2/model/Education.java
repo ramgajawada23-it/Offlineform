@@ -12,15 +12,13 @@ public class Education {
     private Long id;
 
     private String qualification;
-    private String institution;
-    private Integer yearOfPassing;
+    private String institute;
+    private Integer year;
 
-    @ManyToOne
-    @JoinColumn(name = "candidate_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "candidate_id", nullable = false)
     @JsonBackReference
     private Candidate candidate;
-
-    // ===== Getters & Setters =====
 
     public Long getId() {
         return id;
@@ -34,20 +32,20 @@ public class Education {
         this.qualification = qualification;
     }
 
-    public String getInstitution() {
-        return institution;
+    public String getInstitute() {
+        return institute;
     }
 
-    public void setInstitution(String institution) {
-        this.institution = institution;
+    public void setInstitute(String institute) {
+        this.institute = institute;
     }
 
-    public Integer getYearOfPassing() {
-        return yearOfPassing;
+    public Integer getYear() {
+        return year;
     }
 
-    public void setYearOfPassing(Integer yearOfPassing) {
-        this.yearOfPassing = yearOfPassing;
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public Candidate getCandidate() {

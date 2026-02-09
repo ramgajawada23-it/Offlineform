@@ -43,7 +43,11 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-    public CandidateResponseDTO getCandidateById(Long id) {
+public CandidateResponseDTO getCandidateById(Long id) {
+  if (id == null) {
+    throw new IllegalArgumentException("Id cannot be null");
+  }
+
         Candidate candidate = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Candidate not found"));
         return mapToDTO(candidate);
