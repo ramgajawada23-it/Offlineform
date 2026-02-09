@@ -1,58 +1,35 @@
-package com.example.off2.model;
+package com.example.off2.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import com.example.off2.model.FamilyMember;
+
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Table(name = "candidate")
-public class Candidate {
+public class CandidateResponseDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "full_name")
     private String fullName;
-
     private String email;
     private String phone;
     private String gender;
     private String state;
     private String city;
-
-    // 🔐 Sensitive
-    private String aadhaar;
-
-    @Column(name = "bank_account")
-    private String bankAccount;
-
     private LocalDate dob;
 
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    // 🔐 Masked fields
+    private String aadhaar;
+    private String bankAccount;
+
     private List<FamilyMember> familyMembers;
-
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Education> educations;
-
-    public List<Education> getEducations() {
-        return educations;
-    }
-
-    public void setEducations(List<Education> educations) {
-        this.educations = educations;
-        if (educations != null) {
-            educations.forEach(e -> e.setCandidate(this));
-        }
-    }
 
     // ===== Getters & Setters =====
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -103,6 +80,14 @@ public class Candidate {
         this.city = city;
     }
 
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
     public String getAadhaar() {
         return aadhaar;
     }
@@ -119,23 +104,11 @@ public class Candidate {
         this.bankAccount = bankAccount;
     }
 
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
     public List<FamilyMember> getFamilyMembers() {
         return familyMembers;
     }
 
     public void setFamilyMembers(List<FamilyMember> familyMembers) {
         this.familyMembers = familyMembers;
-
-        if (familyMembers != null) {
-            familyMembers.forEach(f -> f.setCandidate(this));
-        }
     }
 }
