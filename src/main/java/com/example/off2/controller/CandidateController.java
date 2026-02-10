@@ -13,23 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/candidates")
-@CrossOrigin(
-    origins = {
-        "http://127.0.0.1:5500",
-        "http://localhost:5500",
-        "https://offline-form-six.vercel.app"
-    },
-    allowedHeaders = "*",
-    methods = {
-        RequestMethod.GET,
-        RequestMethod.POST,
-        RequestMethod.PUT,
-        RequestMethod.DELETE,
-        RequestMethod.OPTIONS
-    }
-)
-
-
 public class CandidateController {
 
     private final CandidateService candidateService;
@@ -40,11 +23,10 @@ public class CandidateController {
 
     // ================= CREATE Candidate + Family =================
     @PostMapping
-@Transactional
-public ResponseEntity<Candidate> createCandidate(@RequestBody Candidate candidate)
-{
+    @Transactional
+    public ResponseEntity<Candidate> createCandidate(@RequestBody Candidate candidate) {
 
-        // 🔗 Ensure bidirectional mapping
+        // Ensure bidirectional mapping
         if (candidate.getFamilyMembers() != null) {
             for (FamilyMember member : candidate.getFamilyMembers()) {
                 member.setCandidate(candidate);
@@ -55,13 +37,13 @@ public ResponseEntity<Candidate> createCandidate(@RequestBody Candidate candidat
         return new ResponseEntity<>(savedCandidate, HttpStatus.CREATED);
     }
 
-    // ================= GET ALL Candidates (MASKED RESPONSE) =================
+    // ================= GET ALL Candidates =================
     @GetMapping
     public ResponseEntity<List<CandidateResponseDTO>> getAllCandidates() {
         return ResponseEntity.ok(candidateService.getAllCandidates());
     }
 
-    // ================= GET Candidate by ID (MASKED RESPONSE) =================
+    // ================= GET Candidate by ID =================
     @GetMapping("/{id}")
     public ResponseEntity<CandidateResponseDTO> getCandidateById(@PathVariable Long id) {
         return ResponseEntity.ok(candidateService.getCandidateById(id));
