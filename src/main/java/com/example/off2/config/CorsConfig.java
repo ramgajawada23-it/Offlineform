@@ -12,7 +12,6 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(
-                        "https://offline-form-6dwbvw2ai-ramgajawada23-its-projects.vercel.app",
                         "https://offline-form-six.vercel.app",
                         "http://localhost:5500",
                         "http://127.0.0.1:5500")
