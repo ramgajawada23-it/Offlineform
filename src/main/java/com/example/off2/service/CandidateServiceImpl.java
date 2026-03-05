@@ -43,10 +43,10 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-public CandidateResponseDTO getCandidateById(Long id) {
-  if (id == null) {
-    throw new IllegalArgumentException("Id cannot be null");
-  }
+    public CandidateResponseDTO getCandidateById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
 
         Candidate candidate = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Candidate not found"));
@@ -61,7 +61,6 @@ public CandidateResponseDTO getCandidateById(Long id) {
         dto.setPhone(c.getPhone());
         dto.setGender(c.getGender());
         dto.setState(c.getState());
-        dto.setCity(c.getCity());
         dto.setDob(c.getDob());
 
         // 🔐 MASK HERE

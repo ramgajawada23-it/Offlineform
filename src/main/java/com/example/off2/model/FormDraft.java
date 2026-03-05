@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(
-    name = "form_drafts",
-    uniqueConstraints = @UniqueConstraint(columnNames = "mobile")
-)
+@Table(name = "form_drafts", uniqueConstraints = @UniqueConstraint(columnNames = "mobile"))
 public class FormDraft {
 
     @Id
@@ -18,7 +15,7 @@ public class FormDraft {
     private String mobile;
 
     @Lob
-    @Column(columnDefinition = "json", nullable = false)
+    @Column(nullable = false)
     private String formData;
 
     @Column(name = "updated_at")

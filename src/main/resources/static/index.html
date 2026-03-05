@@ -1,0 +1,1138 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>candidateForm</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <nav class="top-nav">
+    <div class="nav-left">
+      <span class="app-title">Candidate Registration Form</span>
+    </div>
+    <div class="nav-right">
+      <img src="logo.png" alt="Natco Pharma Logo" class="nav-logo">
+    </div>
+  </nav>
+
+  <div class="layout">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <h3 class="sidebar-title">About you</h3>
+      <ul class="step-menu">
+        <li onclick="goToStep(0)">Personal</li>
+        <li onclick="goToStep(1)">Family Details</li>
+        <li onclick="goToStep(2)">Education & Skills</li>
+        <li onclick="goToStep(3)">Experience</li>
+        <li onclick="goToStep(4)">Salary & Declaration</li>
+        <li onclick="goToStep(5)">Mediclaim Circular</li> <!-- ✅ NEW -->
+      </ul>
+
+    </aside>
+
+    <div class="container">
+      <form id="candidateForm" novalidate>
+        <!-- Hidden signature fields -->
+        <input type="file" id="signatureFile" style="display: none;" accept=".png,.jpg,.jpeg">
+        <input type="hidden" id="signatureBase64" name="signatureBase64">
+
+        <!-- STEP PROGRESS BAR -->
+        <div class="stepper">
+          <div class="stepper-line"></div>
+
+          <div class="stepper-step">1</div>
+          <div class="stepper-step">2</div>
+          <div class="stepper-step">3</div>
+          <div class="stepper-step">4</div>
+          <div class="stepper-step">5</div>
+          <div class="stepper-step">6</div>
+        </div>
+        <!-- ================= STEP 1 ================= -->
+        <section class="form-step active">
+
+          <h3 class="section-title">Personal & KYC Details</h3>
+          <input type="hidden" id="employeeId" name="employeeId">
+          <!-- Name Row -->
+          <div class="grid-2">
+            <div class="form-field">
+              <label>First Name</label>
+              <input type="text" id="firstName" name="firstName">
+            </div>
+            <div class="form-field">
+              <label>Last Name</label>
+              <input type="text" id="lastName" name="lastName">
+            </div>
+          </div>
+
+          <!-- DOB / POB -->
+          <div class="grid-3">
+            <div class="form-field">
+              <label>Date of Birth</label>
+              <input type="date" id="dob" name="dob">
+            </div>
+            <div class="form-field">
+              <label>Place of Birth</label>
+              <input type="text" pattern="[a-zA-Z ]+" id="placeOfBirth" name="placeOfBirth">
+            </div>
+            <div class="form-field">
+              <label>Age</label>
+              <input type="number" placeholder="Should be above 18" id="age" name="age" readonly>
+            </div>
+          </div>
+
+          <!-- Gender -->
+          <div class="gender-group">
+            <label class="group-label">Gender</label>
+            <div class="radio-inline">
+              <label>
+                <input type="radio" name="gender" value="Male">
+                Male
+              </label>
+
+              <label>
+                <input type="radio" name="gender" value="Female">
+                Female
+              </label>
+            </div>
+          </div>
+
+
+
+          <!-- Personal Info -->
+          <div class="grid-3">
+            <div class="form-field">
+              <select id="state" name="state">
+                <option value="">Select State</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Kerala">Kerala</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <input placeholder="Religion" id="religion" name="religion">
+            </div>
+
+            <div class="form-field">
+              <input placeholder="Nationality" id="nationality" name="nationality">
+            </div>
+          </div>
+
+
+          <div class="grid-2">
+            <div class="form-field">
+              <input placeholder="Father's Name" id="fatherName" name="fatherName">
+            </div>
+            <div class="form-field">
+              <input placeholder="Mother's Name" id="motherName" name="motherName">
+            </div>
+          </div>
+
+          <!-- Marriage -->
+          <div class="grid-3">
+            <div class="form-field">
+              <select id="maritalStatus" name="maritalStatus">
+                <option value="">MaritalStatus</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <input type="date" id="marriageDate" name="marriageDate">
+            </div>
+
+            <div class="form-field">
+              <input type="number" id="childrenCount" placeholder="No. of Children" name="childrenCount">
+            </div>
+          </div>
+
+          <!-- Address -->
+          <h4>Contact & Address</h4>
+
+          <div class="grid-2">
+            <div class="form-field">
+              <input placeholder="Permanent Address" id="permanentAddress" name="permanentAddress">
+            </div>
+
+            <div class="form-field">
+              <input type="tel" placeholder="Permanent Mobile Number" id="mobile1" class="mobile-input" maxlength="10"
+                inputmode="numeric" name="permanentMobile" readonly>
+            </div>
+          </div>
+
+
+          <!-- Physical -->
+          <h4>Physical Details</h4>
+          <div class="grid-3">
+            <div class="form-field">
+              <input placeholder="Height (Feet'inches)" id="heightFeet" name="heightFeet">
+            </div>
+            <div class="form-field">
+              <input placeholder="Weight (kg)" id="weight" name="weight">
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-field">
+              <input placeholder="Identification Marks" id="identification" name="identificationMarks">
+            </div>
+            <div class="form-field">
+              <input placeholder="Eyesight" id="eyesight" name="eyesight">
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div class="form-field">
+              <select id="bloodGroup" name="bloodGroup">
+                <option value="">Select Blood Group</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+                <option>O+</option>
+                <option>O-</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <select id="disability" name="disability">
+                <option value="">Select Physical Disability</option>
+                <option>No Disability</option>
+                <option>Yes</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <select id="illness" name="illness">
+                <option value="">select illness</option>
+                <option>No Prolonged Illness</option>
+                <option>Yes</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="illness-fields">
+              <input placeholder="Illness Name" id="illnessName" name="illnessName">
+            </div>
+
+            <div class="illness-fields">
+              <input placeholder="Illness Duration" id="illnessDuration" name="illnessDuration">
+            </div>
+
+          </div>
+
+          <!-- KYC Details -->
+          <h4>KYC Details</h4>
+
+          <div class="grid-3">
+            <div class="form-field">
+              <!-- Real value stored here -->
+              <input type="hidden" id="pan" name="pan">
+              <!-- Masked UI input -->
+              <input type="text" id="panDisplay" placeholder="PAN Number">
+            </div>
+
+            <div class="form-field">
+              <input type="hidden" id="aadhaar" name="aadhaar">
+              <input type="text" id="aadhaarDisplay" placeholder="Aadhaar Number">
+            </div>
+
+          </div>
+
+          <div class="grid-3">
+            <div class="form-field">
+              <input type="text" placeholder="Bank Name" id="bankName" name="bankName">
+            </div>
+            <div class="form-field">
+              <input type="hidden" id="bankAccount" name="bankAccount">
+              <input type="text" id="bankAccountDisplay" placeholder="Account Number">
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div class="form-field">
+              <input placeholder="IFSC Code" id="ifsc" name="ifsc">
+            </div>
+            <div class="form-field">
+              <input placeholder="Branch Name" id="branch" name="branch">
+            </div>
+          </div>
+          <div class="form-field">
+            <!-- <span class="required"></span> -->
+            <input type="email" id="email" name="email" placeholder="Enter Email Address" autocomplete="email">
+            <small class="error-text" style="display:none;"></small>
+          </div>
+          <div class="form-field">
+            <input type="tel" placeholder="Mobile Number" id="mobile2" class="mobile-input" maxlength="10"
+              inputmode="numeric" name="alternateMobile" readonly>
+          </div>
+        </section>
+
+        <!-- ================= STEP 2 ================= -->
+        <section class="form-step" id="step2">
+          <h3 class="section-title">Details of Family Members</h3>
+
+          <div class="table-wrap">
+            <table class="family-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">Action</th>
+                  <th>Relationship</th>
+                  <th>Name</th>
+                  <th>DOB</th>
+                  <th>Dependent</th>
+                  <th>Occupation</th>
+                  <th>Income</th>
+                </tr>
+              </thead>
+
+              <tbody id="familyTableBody">
+                <tr>
+                  <td class="center">
+                    <button type="button" class="btn-delete" onclick="removeFamilyRow(this)">
+                      <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle;">
+                        <path fill="currentColor"
+                          d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                      </svg>
+                    </button>
+                  </td>
+
+                  <td>
+                    <div class="form-field">
+                      <select name="family[0][relationship]">
+                        <option value="">Select</option>
+                        <option value="Father">Father</option>
+                        <option value="Mother">Mother</option>
+                        <option value="Brother">Brother</option>
+                        <option value="Sister">Sister</option>
+                        <option value="Spouse">Spouse</option>
+                      </select>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="form-field">
+                      <input type="text" name="family[0][name]" placeholder="Full Name" readonly>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="form-field">
+                      <input type="date" name="family[0][dob]">
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="form-field">
+                      <select name="family[0][dependent]">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="form-field">
+                      <input type="text" name="family[0][occupation]" placeholder="Occupation" required>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="form-field">
+                      <input type="number" name="family[0][income]" min="0" max="999999">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="add-row">
+            <button type="button" onclick="addFamilyRow()">Add Row</button>
+            <br><br>
+          </div>
+        </section>
+
+        <!-- ================= STEP 3 ================= -->
+        <section class="form-step">
+
+          <h3 class="section-title">Education & Qualifications</h3>
+
+          <div class="education-section">
+
+            <!-- ================= FIXED GRADUATION ================= -->
+            <h4>Graduation</h4>
+            <div class="graduation-wrapper">
+
+              <!-- First Fixed Graduation Table (NO DELETE) -->
+              <div class="table-wrap">
+                <table class="education-table">
+                  <thead>
+                    <tr>
+                      <th>College Name</th>
+                      <th>Board / University</th>
+                      <th>Degree</th>
+                      <th>Stream</th>
+                      <th>Joining Year</th>
+                      <th>Leaving Year</th>
+                      <th>Aggregate %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="main-graduation-row">
+                      <td><input type="text" name="grad_college[]"></td>
+                      <td><input type="text" name="grad_board[]"></td>
+                      <td><input type="text" name="grad_degree[]"></td>
+                      <td><input type="text" name="grad_stream[]"></td>
+                      <td><input type="number" name="grad_joining[]"></td>
+                      <td><input type="number" name="grad_leaving[]"></td>
+                      <td><input type="number" name="grad_aggregate[]"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Added graduation tables will appear here -->
+              <div id="extraGraduations"></div>
+
+            </div>
+
+            <br>
+
+            <!-- ================= INTERMEDIATE ================= -->
+            <h4>Intermediate</h4>
+            <div class="table-wrap">
+              <table class="education-table">
+                <thead>
+                  <tr>
+                    <th>College Name</th>
+                    <th>Board</th>
+                    <th>Stream</th>
+                    <th>Joining Year</th>
+                    <th>Leaving Year</th>
+                    <th>Aggregate %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" name="inter_college"></td>
+                    <td><input type="text" name="inter_board"></td>
+                    <td><input type="text" name="inter_stream"></td>
+                    <td><input type="number" name="inter_joining"></td>
+                    <td><input type="number" name="inter_leaving"></td>
+                    <td><input type="number" name="inter_aggregate"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <br>
+
+            <!-- ================= 10TH ================= -->
+            <h4>10th / Schooling</h4>
+            <div class="table-wrap">
+              <table class="education-table">
+                <thead>
+                  <tr>
+                    <th>School Name</th>
+                    <th>Board</th>
+                    <th>Joining Year</th>
+                    <th>Leaving Year</th>
+                    <th>Aggregate %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" name="school_name"></td>
+                    <td><input type="text" name="school_board"></td>
+                    <td><input type="number" name="school_joining"></td>
+                    <td><input type="number" name="school_leaving"></td>
+                    <td><input type="number" name="school_aggregate"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <br>
+            <button type="button" id="addEducationBtn">Add Education</button>
+          </div>
+
+          <hr>
+
+          <h3 class="section-title">Skills & Personal Attributes</h3>
+
+          <!-- Academic Achievements -->
+          <div class="form-field">
+            <label>Academic Achievements (if any)</label>
+            <textarea placeholder="Mention academic achievements" name="academicAchievements"></textarea>
+          </div>
+
+          <!-- Professional Body -->
+          <div class="form-field">
+            <label>Are you a member of any professional Body/ Society ?</label>
+            <select name="memberOfProfessionalBody">
+              <option value="">Select</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+
+            <textarea name="professionalBodyDetails" class="conditional-details"
+              placeholder="Give details if YES"></textarea>
+          </div>
+
+          <!-- Honors -->
+          <div class="form-field">
+            <label>Have you received any special Honors/ Scholarship?</label>
+            <select name="specialHonors">
+              <option value="">Select</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+
+            <textarea name="specialHonorsDetails" class="conditional-details"
+              placeholder="Give details if YES"></textarea>
+          </div>
+
+          <!-- Publications -->
+          <div class="form-field">
+            <label>Details of papers Presented / Publications made.</label>
+            <textarea placeholder="Topics, dates, details"></textarea>
+          </div>
+
+          <!-- Extra Curricular Activities -->
+          <div class="form-field" id="extraCurricularSection">
+            <label class="field-label">EXTRA CURRICULAR ACTIVITIES:</label>
+
+            <div class="table-wrap">
+              <table class="activity-table">
+                <thead>
+                  <tr>
+                    <th>Literary / Cultural</th>
+                    <th>Sports</th>
+                    <th>Hobbies</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <textarea id="activityLiterary" name="activityLiterary" placeholder="Literary / Cultural"
+                        rows="5"></textarea>
+                    </td>
+                    <td>
+                      <textarea id="activitySports" name="activitySports" placeholder="Sports" rows="5"></textarea>
+                    </td>
+                    <td>
+                      <textarea id="activityHobbies" name="activityHobbies" placeholder="Hobbies" rows="5"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- ✅ FIELD LEVEL ERROR (REQUIRED) -->
+            <small class="error-text" id="extraCurricularError" style="display:none;">
+              Enter at least one Extra‑Curricular activity
+            </small>
+          </div>
+
+          <!-- Languages -->
+          <div class="form-field">
+            <div class="table-wrap">
+              <table class="language-table" id="languageTable">
+                <thead>
+                  <tr>
+                    <th>Language</th>
+                    <th>Speak</th>
+                    <th>Read</th>
+                    <th>Write</th>
+                    <th>Mother Tongue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Fixed English -->
+                  <tr>
+                    <td>
+                      <input type="text" name="languages[0][name]" value="English" readonly>
+                    </td>
+                    <td><input type="checkbox" name="languages[0][speak]"></td>
+                    <td><input type="checkbox" name="languages[0][read]"></td>
+                    <td><input type="checkbox" name="languages[0][write]"></td>
+                    <td><input type="radio" name="motherTongue" value="0"></td>
+                  </tr>
+
+                  <!-- Fixed Hindi -->
+                  <tr>
+                    <td>
+                      <input type="text" name="languages[1][name]" value="Hindi" readonly>
+                    </td>
+                    <td><input type="checkbox" name="languages[1][speak]"></td>
+                    <td><input type="checkbox" name="languages[1][read]"></td>
+                    <td><input type="checkbox" name="languages[1][write]"></td>
+                    <td><input type="radio" name="motherTongue" value="1"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button type="button" id="addLanguageBtn" class="btn-add">
+              + Add Language
+            </button>
+            <small class="error-text" id="languageError" style="display:none;">
+              Select at least one language or add a new one.
+            </small>
+          </div>
+
+
+          <!-- Strengths / Weaknesses / Values -->
+          <div class="grid-3">
+            <div class="form-field">
+              <textarea id="strengths" name="strengths" placeholder="List three of your major strengths "></textarea>
+            </div>
+            <div class="form-field">
+              <textarea id="Weaknesses" name="Weaknesses" placeholder="List your major weaknesses "></textarea>
+            </div>
+            <div class="form-field">
+              <textarea id="Values" name="Values"
+                placeholder="Mention three things/ concepts/ practices/ ideas etc. that you value most in your life. "></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= STEP 4 ================= -->
+        <section class="form-step">
+
+          <h3 class="section-title">Experience Details</h3>
+
+          <h4>Total Experience</h4>
+          <div class="grid-2">
+            <div class="form-field">
+              <input type="number" placeholder="Total Experience (Years)" id="expYears" name="expYears">
+            </div>
+            <div class="form-field">
+              <input type="number" placeholder="Total Experience (Months)" id="expMonths" name="expMonths">
+            </div>
+          </div>
+
+          <hr>
+
+          <div id="experienceDetails">
+
+            <h4>Employment History (Present to Past)</h4>
+
+            <!-- UAN Number (Conditional) -->
+            <div class="form-field" id="uanContainer" style="display:none;">
+              <input type="text" id="uan" name="uan" placeholder="UAN Number" maxlength="12" inputmode="numeric">
+            </div>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <input type="text" placeholder="Company Name" name="companyName">
+              </div>
+              <div class="form-field">
+                <input type="text" placeholder="Company Location / Head Office" name="companyLocation">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <label>
+                  <h6>From</h6>
+                  <input type="date" placeholder="From Date" id="expFrom" name="expFrom">
+                </label>
+              </div>
+              <div class="form-field">
+                <label>
+                  <h6>To</h6>
+                  <input type="date" placeholder="To Date / Till Date" id="expTo" name="expTo">
+                </label>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <input type="text" placeholder="Designation" name="designation">
+              </div>
+              <div class="form-field">
+                <input type="text" placeholder="Reporting To (Name / Designation)" name="reportingTo">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>Job Responsibilities</label>
+              <textarea placeholder="Describe your responsibilities" name="jobResponsibilities"></textarea>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <input type="number" placeholder="Gross Salary While Leaving" name="grossSalaryLeaving">
+              </div>
+              <div class="form-field">
+                <input type="text" placeholder="Reason for Leaving" id="reasonForLeaving" name="reasonForLeaving">
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+
+          <div id="assignmentsHandled">
+            <h3 class="section-title">ASSIGNMENTS HANDLED</h3>
+            <h6>(For Sales / Marketing / Product Management Position)</h6>
+
+            <div class="form-field">
+              <label>Company &amp; Head Quarters</label>
+              <input type="text" placeholder="Company &amp; Head Quarters" name="assignmentCompany">
+            </div>
+
+            <div class="form-field">
+              <label>Name of Major Products Handled</label>
+              <textarea placeholder="Name of Major Products Handled" name="assignmentProducts"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label>Territories where worked / Currently Operating</label>
+              <input type="text" name="assignmentTerritory">
+            </div>
+
+            <div class="form-field">
+              <label>Your Major Contribution</label>
+              <input type="text" name="assignmentContribution">
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= STEP 5 ================= -->
+        <section class="form-step">
+          <div id="salarySection">
+            <h3 class="section-title">Present Salary (Gross) – Monthly Breakup</h3>
+
+            <div class="table-wrap">
+              <table class="family-table">
+                <thead>
+                  <tr>
+                    <th>(a) Monthly Benefits</th>
+                    <th>Rs.</th>
+                    <th>(b) Deferred Benefits</th>
+                    <th>Rs.</th>
+                    <th>(c) Statutory & Security Benefits</th>
+                    <th>Rs.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Basic</td>
+                    <td><input type="number" name="salary_basic"></td>
+                    <td>LTA</td>
+                    <td><input type="number" name="salary_lta"></td>
+                    <td>PF</td>
+                    <td><input type="number" name="salary_pf"></td>
+                  </tr>
+                  <tr>
+                    <td>DA</td>
+                    <td><input type="number" name="salary_da"></td>
+                    <td>Medical</td>
+                    <td><input type="number" name="salary_medical"></td>
+                    <td>Gratuity</td>
+                    <td><input type="number" name="salary_gratuity"></td>
+                  </tr>
+                  <tr>
+                    <td>Conveyance Allowance</td>
+                    <td><input type="number" name="salary_conveyance"></td>
+                    <td>Bonus / Ex‑gratia</td>
+                    <td><input type="number" name="salary_bonus"></td>
+                    <td>Superannuation</td>
+                    <td><input type="number" name="salary_superannuation"></td>
+                  </tr>
+                  <tr>
+                    <td>Education Allowance</td>
+                    <td><input type="number" name="salary_education"></td>
+                    <!-- <td>Others</td>
+                    <td><input type="number" id="monthlyOthers" name="monthlyOthers"></td>
+                    <td>Others</td>
+                    <td><input type="number" id="statutoryOthers" name="statutoryOthers"></td> -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>House Rent Allowance</td>
+                    <td><input type="number" name="salary_hra"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <br>
+
+            <div class="grid-3">
+              <div class="form-field"><input type="number" id="totalA" name="totalA" placeholder="Total (a)" readonly>
+              </div>
+              <div class="form-field"><input type="number" id="totalB" name="totalB" placeholder="Total (b)" readonly>
+              </div>
+              <div class="form-field"><input type="number" id="totalC" name="totalC" placeholder="Total (c)" readonly>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <label>Total Earnings Per Month (a+b+c)</label>
+                <input type="number" id="monthlyTotal" name="monthlyTotal" readonly>
+              </div>
+              <div class="form-field">
+                <label>Total Earnings Per Annum</label>
+                <input type="number" id="annualTotal" name="annualTotal" readonly>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>Details of other perquisites</label>
+              <textarea name="otherPerquisites"></textarea>
+            </div>
+          </div>
+          <hr>
+
+          <h4>Loan Details</h4>
+
+          <div class="form-field">
+            <label>Have you availed any loan facility?</label>
+            <select id="loanAvailed" name="loanAvailed">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="grid-2" id="loanFields" style="display:none;">
+            <div class="form-field">
+              <input id="loanPurpose" placeholder="Purpose of Loan" name="loanPurpose">
+            </div>
+            <div class="form-field">
+              <input id="loanAmount" type="text" placeholder="Loan Amount" name="loanAmount" min="0" maxlength="8"
+                inputmode="numeric">
+            </div>
+            <div class="form-field">
+              <input id="loanBalance" type="text" placeholder="Balance Amount" name="loanBalance" min="0" maxlength="8"
+                inputmode="numeric">
+            </div>
+            <div class="form-field">
+              <input id="loanSalary" type="text" placeholder="Expected Salary" name="loanSalary" min="0" maxlength="8"
+                inputmode="numeric">
+            </div>
+          </div>
+
+          <div id="referenceSection">
+            <h3 class="section-title">References</h3>
+            <p>Two referees (at least one from present / past employer)</p>
+
+            <div class="table-wrap">
+              <table class="family-table">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Occupation</th>
+                    <th>Address & Telephone No.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td><input name="ref[0][name]"></td>
+                    <td><input name="ref[0][occupation]"></td>
+                    <td><input name="ref[0][address]"></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td><input name="ref[1][name]"></td>
+                    <td><input name="ref[1][occupation]"></td>
+                    <td><input name="ref[1][address]"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="form-field">
+              <label>Do you have any objection if we refer to your employer?</label>
+              <select name="objectionToRefer">
+                <option value="">Select</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <section id="otherParticulars">
+            <h3 class="section-title">Other Particulars</h3>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <input type="number" placeholder="How soon can you join (Days)" name="joiningDays" id="joiningDays"
+                  min="0" max="99">
+              </div>
+
+              <div class="form-field">
+                <select name="interviewedBefore" id="interviewedBefore">
+                  <option value="">Have you been interviewed by us before?</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+            <div id="interviewDetails" style="display: none;">
+              <div class="grid-3">
+                <div class="form-field"><input type="date" placeholder="Date" name="interviewDate" id="interviewDate">
+                </div>
+                <div class="form-field"><input placeholder="Place" name="interviewPlace" id="interviewPlace"></div>
+                <div class="form-field"><input placeholder="Name of Interviewer" name="interviewerName"
+                    id="interviewerName"></div>
+              </div>
+
+              <div class="form-field"><input placeholder="For which post" name="interviewPost" id="interviewPost"></div>
+            </div>
+          </section>
+          <hr>
+
+          <h3 class="section-sep">DECLARATION</h3>
+
+          <div class="declaration-text">
+            <p class="declaration-paragraph">
+              I hereby declare and certify that all the information provided by me in this
+              application form is true and genuine to the best of my knowledge. Should any
+              information given above be found fraudulent/false, the management of Natco
+              Pharma Limited is at liberty to take any action against me as deemed fit
+              including termination of my services.
+            </p>
+
+            <div class="form-field declaration-agree">
+              <input type="checkbox" id="declaration" name="declarationAgreed">
+              <label for="declaration">I agree to the above declaration</label>
+            </div>
+
+            <div class="grid-2 bottom-section">
+              <div class="form-field">
+                <label>DATE</label>
+                <input type="date" id="declDate" name="declarationDate">
+              </div>
+
+              <div class="form-field">
+                <label>PLACE</label>
+                <input type="text" id="declPlace" name="declarationPlace">
+              </div>
+            </div>
+
+            <div class="form-field signature-upload-container right">
+              <label for="signatureFile" class="signature-upload-box" id="step5SigBox">
+                <span class="placeholder-text">Click to add a signature</span>
+                <img src="" class="signature-preview" id="step5SigPreview" style="display:none;">
+              </label>
+              <span class="label">Signature of the Applicant</span>
+              <small class="error-text" id="signatureError" style="display:none;"></small>
+            </div>
+
+            <hr>
+          </div> <!-- Close declaration-text -->
+        </section>
+
+        <!-- ================= STEP 6 ================= -->
+        <section class="form-step step-circular" data-step="6">
+          <input type="hidden" id="mediclaimConsent" name="mediclaimConsent">
+          <main class="page a4 portrait">
+
+            <!-- HEADER -->
+            <header class="page-header">
+              <h1 class="doc-title">CIRCULAR</h1>
+
+              <div class="org">
+                <div class="org-sub">NATCO PHARMA LIMITED</div>
+                <br>
+                <div class="org-name">To</div>
+                <div class="org-sub">Field Force (Additions)</div>
+              </div>
+
+              <br />
+
+              <!-- Mediclaim Choice -->
+              <div class="enroll-question">
+                <span class="question-text">
+                  Are you interested to enrol in Company Mediclaim policy?
+                </span>
+
+                <div class="radio-group">
+                  <label>
+                    <input type="radio" name="mediclaim" id="mediclaimYes" value="Yes">
+                    Yes
+                  </label>
+
+                  <label>
+                    <input type="radio" name="mediclaim" id="mediclaimNo" value="No">
+                    No
+                  </label>
+                </div>
+              </div>
+
+              <hr>
+
+              <div id="mediclaimDetails" style="display:none;">
+                <!-- INTRO -->
+                <section class="intro">
+                  <p>Dear All,</p>
+                  <p>
+                    It is proposed to cover the Field Employees under Group Mediclaim Policy.
+                    Therefore, you are requested to provide the family details immediately.
+                  </p>
+                </section>
+
+                <!-- EMPLOYEE DETAILS -->
+                <section class="employee-block">
+                  <h2 class="section-title">Employee Details</h2>
+
+                  <div class="grid grid-3">
+                    <div class="field">
+                      <label>Name of the Employee</label>
+                      <div class="line" data-bind="firstName lastName"></div>
+                    </div>
+
+                    <div class="field">
+                      <label>D.O.B.</label>
+                      <div class="line short" data-bind="dob"></div>
+                    </div>
+
+                    <div class="field">
+                      <label>Emp. No.</label>
+                      <div class="line short" data-bind="employeeId"></div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- FAMILY DETAILS -->
+                <section class="family-block">
+                  <h2 class="section-title">
+                    Family Members details <span class="muted">(As Per Aadhaar)</span>
+                  </h2>
+
+                  <div class="table-wrap">
+                    <table class="table family-table">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Relation</th>
+                          <th>Gender</th>
+                          <th>Name</th>
+                          <th>Date of Birth</th>
+                        </tr>
+                      </thead>
+                      <tbody id="mediclaimFamilyBody">
+                        <!-- JS will auto‑populate from Step‑2 -->
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="signature-row right">
+                    <div class="signature-block signature-upload-container">
+                      <label for="signatureFile" class="signature-upload-box" id="step6SigBox">
+                        <span class="placeholder-text">Click to add a signature</span>
+                        <img src="" class="signature-preview" id="step6SigPreview" style="display:none;">
+                      </label>
+                      <span class="label">Signature of the Employee</span>
+                    </div>
+
+                    <div class="date-block">
+                      <span class="label">Date:</span>
+                      <div class="line short" data-bind="today"></div>
+                    </div>
+                  </div>
+
+                </section>
+
+                <!-- NOTE -->
+                <section class="note-block">
+                  <h2 class="section-title">Note</h2>
+                  <p>
+                    Our Group Mediclaim enrollment will be possible at the time of joining
+                    or at the time of renewal. Mid‑term requests will not be processed.
+                  </p>
+
+                  <br />
+
+                  <p>
+                    If you are interested to avail Mediclaim facility, every month
+                    grade‑wise deduction details are as follows for your reference:
+                  </p>
+
+                  <table class="table deduction-table table-wrap narrow">
+                    <thead>
+                      <tr>
+                        <th>Grade</th>
+                        <th class="right">Monthly Deduction (₹)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>BDE(T) & BDE</td>
+                        <td class="right">1,000</td>
+                      </tr>
+                      <tr>
+                        <td>ASE / ABDM / RMM</td>
+                        <td class="right">1,400</td>
+                      </tr>
+                      <tr>
+                        <td>Sr. RMM & ABOVE</td>
+                        <td class="right">1,600</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+          </main>
+        </section>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+          <button type="button" id="prevBtn">Previous</button>
+          <button type="button" id="nextBtn">Next</button>
+          <button type="submit" id="submitBtn">Submit</button>
+        </div>
+
+      </form>
+    </div> <!-- container -->
+  </div> <!-- layout -->
+
+  <!-- <div id="thankYouScreen" style="display:none; text-align:center; padding:60px;">
+    <h2>Thank You!</h2>
+    <p>Your application has been submitted successfully.</p>
+  </div> -->
+
+  <script src="offline-db.js"></script>
+  <script src="form.js?v=1.5"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(reg => {
+            console.log('Service Worker registered', reg);
+            if ('sync' in reg) {
+              reg.sync.register('sync-offline-forms')
+                .catch(err => console.log('Sync registration failed', err));
+            }
+          })
+          .catch(err => console.log('Service Worker registration failed', err));
+      });
+    }
+  </script>
+</body>
+
+</html>

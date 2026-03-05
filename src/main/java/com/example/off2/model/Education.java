@@ -11,9 +11,14 @@ public class Education {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String qualification;
-    private String institute;
-    private Integer year;
+    private String qualification; // Graduation, Inter, 10th
+    private String college;
+    private String board;
+    private String degree;
+    private String stream;
+    private Integer joiningYear;
+    private Integer leavingYear;
+    private Double aggregatePercent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "candidate_id", nullable = false)
@@ -24,6 +29,10 @@ public class Education {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getQualification() {
         return qualification;
     }
@@ -32,20 +41,60 @@ public class Education {
         this.qualification = qualification;
     }
 
-    public String getInstitute() {
-        return institute;
+    public String getCollege() {
+        return college;
     }
 
-    public void setInstitute(String institute) {
-        this.institute = institute;
+    public void setCollege(String college) {
+        this.college = college;
     }
 
-    public Integer getYear() {
-        return year;
+    public String getBoard() {
+        return board;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setBoard(String board) {
+        this.board = board;
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
+
+    public String getStream() {
+        return stream;
+    }
+
+    public void setStream(String stream) {
+        this.stream = stream;
+    }
+
+    public Integer getJoiningYear() {
+        return joiningYear;
+    }
+
+    public void setJoiningYear(Integer joiningYear) {
+        this.joiningYear = joiningYear;
+    }
+
+    public Integer getLeavingYear() {
+        return leavingYear;
+    }
+
+    public void setLeavingYear(Integer leavingYear) {
+        this.leavingYear = leavingYear;
+    }
+
+    public Double getAggregatePercent() {
+        return aggregatePercent;
+    }
+
+    public void setAggregatePercent(Double aggregatePercent) {
+        this.aggregatePercent = aggregatePercent;
     }
 
     public Candidate getCandidate() {
