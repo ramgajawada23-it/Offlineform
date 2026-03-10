@@ -14,9 +14,12 @@ import java.util.Optional;
 public class LoginController {
 
     private final FormDraftRepository draftRepo;
+    private final com.example.off2.repository.CandidateRepository candidateRepo;
 
-    public LoginController(FormDraftRepository draftRepo) {
+    public LoginController(FormDraftRepository draftRepo,
+            com.example.off2.repository.CandidateRepository candidateRepo) {
         this.draftRepo = draftRepo;
+        this.candidateRepo = candidateRepo;
     }
 
     @PostMapping
@@ -27,14 +30,16 @@ public class LoginController {
         }
 
         Map<String, Object> response = new HashMap<>();
-        Optional<FormDraft> draftOpt = draftRepo.findByMobile(mobile);
-
-        if (draftOpt.isPresent()) {
-            response.put("status", "DRAFT");
-            response.put("draft", draftOpt.get());
+        if (candidateRepo.existsByPhone(mobile)) {
+            response.put("status", "SUBMITTED");
         } else {
-            // In this specific system, absence of a draft means it's a NEW user/form
-            response.put("status", "NEW");
+            Optional<FormDraft> draftOpt = draftRepo.findByMobile(mobile);
+            if (draftOpt.isPresent()) {
+                response.put("status", "DRAFT");
+                response.put("draft", draftOpt.get());
+            } else {
+                response.put("status", "NEW");
+            }
         }
 
         return ResponseEntity.ok(response);

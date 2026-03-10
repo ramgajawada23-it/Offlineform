@@ -101,7 +101,7 @@ async function syncForms() {
           (async () => {
             for (const record of pending) {
               try {
-                const response = await fetch("https://offlineform.onrender.com/api/candidates", {
+                const response = await fetch("/api/candidates", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(record)

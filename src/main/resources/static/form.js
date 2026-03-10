@@ -8,9 +8,9 @@ let autosaveActivated = false;
 let maritalStatus, marriageDate, childrenCount, prolongedIllness, illnessName, illnessDuration;
 let steps = [], stepperSteps = [], sidebarItems = [], currentStep = 0;
 let serverDraft = null;
-const API_BASE = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-  ? "http://localhost:8080"
-  : "https://offlineform.onrender.com";
+const API_BASE = ""; // Use relative paths for IIS reverse proxy
+const formStatus = sessionStorage.getItem("formStatus");
+const loggedInMobile = sessionStorage.getItem("loggedInMobile");
 
 window.debouncedSaveDraft = function () {
   console.warn("debouncedSaveDraft called before initialization");
@@ -3235,6 +3235,8 @@ document.addEventListener("DOMContentLoaded", () => {
       marriageDate: document.getElementById("marriageDate")?.value || null,
       childrenCount: parseInt(document.getElementById("childrenCount")?.value || "0"),
       permanentAddress: document.getElementById("permanentAddress")?.value || "",
+      bloodGroup: document.getElementById("bloodGroup")?.value || "",
+      uan: document.getElementById("uan")?.value || "",
 
       // Physical
       height: document.getElementById("heightFeet")?.value || "",
@@ -3255,8 +3257,88 @@ document.addEventListener("DOMContentLoaded", () => {
       ifsc: document.getElementById("ifsc")?.value || "",
       branch: document.getElementById("branch")?.value || "",
 
+      // Prof Info
+      companyName: document.querySelector("[name='companyName']")?.value || "",
+      designation: document.querySelector("[name='designation']")?.value || "",
+      reportingTo: document.querySelector("[name='reportingTo']")?.value || "",
+      jobResponsibilities: document.querySelector("[name='jobResponsibilities']")?.value || "",
+      grossSalaryLeaving: parseFloat(document.querySelector("[name='grossSalaryLeaving']")?.value || "0"),
+      reasonForLeaving: document.querySelector("[name='reasonForLeaving']")?.value || "",
+      academicAchieved: document.querySelector("[name='academicAchievements']")?.value || "",
+      publicationsDetails: document.querySelector("[name='publicationsDetails']")?.value || "",
+      activityLiterary: document.getElementById("activityLiterary")?.value || "",
+      activitySports: document.getElementById("activitySports")?.value || "",
+      activityHobbies: document.getElementById("activityHobbies")?.value || "",
+      motherTongue: document.querySelector("input[name='motherTongue']:checked")?.value || "",
+      objectionToRefer: document.querySelector("[name='objectionToRefer']")?.value || "",
+
+      assignmentCompany: document.querySelector("[name='assignmentCompany']")?.value || "",
+      assignmentProducts: document.querySelector("[name='assignmentProducts']")?.value || "",
+      assignmentTerritory: document.querySelector("[name='assignmentTerritory']")?.value || "",
+      assignmentContribution: document.querySelector("[name='assignmentContribution']")?.value || "",
+
+      // Salary Breakdown
+      salary_basic: parseFloat(document.querySelector("[name='salary_basic']")?.value || "0"),
+      salary_da: parseFloat(document.querySelector("[name='salary_da']")?.value || "0"),
+      salary_conveyance: parseFloat(document.querySelector("[name='salary_conveyance']")?.value || "0"),
+      salary_education: parseFloat(document.querySelector("[name='salary_education']")?.value || "0"),
+      salary_hra: parseFloat(document.querySelector("[name='salary_hra']")?.value || "0"),
+      salary_lta: parseFloat(document.querySelector("[name='salary_lta']")?.value || "0"),
+      salary_medical: parseFloat(document.querySelector("[name='salary_medical']")?.value || "0"),
+      salary_bonus: parseFloat(document.querySelector("[name='salary_bonus']")?.value || "0"),
+      salary_pf: parseFloat(document.querySelector("[name='salary_pf']")?.value || "0"),
+      salary_gratuity: parseFloat(document.querySelector("[name='salary_gratuity']")?.value || "0"),
+      salary_superannuation: parseFloat(document.querySelector("[name='salary_superannuation']")?.value || "0"),
+      totalA: parseFloat(document.getElementById("totalA")?.value || "0"),
+      totalB: parseFloat(document.getElementById("totalB")?.value || "0"),
+      totalC: parseFloat(document.getElementById("totalC")?.value || "0"),
+      otherPerquisites: document.querySelector("[name='otherPerquisites']")?.value || "",
+
+      // Experience
+      expYears: parseInt(document.getElementById("expYears")?.value || "0"),
+      expMonths: parseInt(document.getElementById("expMonths")?.value || "0"),
+      expFrom: document.getElementById("expFrom")?.value || null,
+      expTo: document.getElementById("expTo")?.value || null,
+
+      // Professional / Personal
+      strengths: document.getElementById("strengths")?.value || "",
+      weaknesses: document.getElementById("Weaknesses")?.value || "",
+      valuesContent: document.getElementById("Values")?.value || "",
+
+      memberOfProfessionalBody: document.querySelector("[name='memberOfProfessionalBody']")?.value || "",
+      professionalBodyDetails: document.querySelector("[name='memberOfProfessionalBody']")?.parentElement?.querySelector("textarea")?.value || "",
+      specialHonors: document.querySelector("[name='specialHonors']")?.value || "",
+      specialHonorsDetails: document.querySelector("[name='specialHonors']")?.parentElement?.querySelector("textarea")?.value || "",
+
+      interviewedBefore: document.getElementById("interviewedBefore")?.value || "",
+      interviewDate: document.getElementById("interviewDate")?.value || null,
+      interviewPlace: document.getElementById("interviewPlace")?.value || "",
+      interviewerName: document.getElementById("interviewerName")?.value || "",
+      interviewPost: document.getElementById("interviewPost")?.value || "",
+
+      loanAvailed: document.getElementById("loanAvailed")?.value || "",
+      loanPurpose: document.getElementById("loanPurpose")?.value || "",
+      loanAmount: parseFloat(document.getElementById("loanAmount")?.value || "0"),
+      loanBalance: parseFloat(document.getElementById("loanBalance")?.value || "0"),
+      loanSalary: parseFloat(document.getElementById("loanSalary")?.value || "0"),
+
+      joiningDays: parseInt(document.getElementById("joiningDays")?.value || "0"),
+
+      monthlyTotal: parseFloat(document.getElementById("monthlyTotal")?.value || "0"),
+      annualTotal: parseFloat(document.getElementById("annualTotal")?.value || "0"),
+
+      signatureBase64: document.getElementById("signatureBase64")?.value || "",
+
+      declaration: document.getElementById("declaration")?.checked ? "Yes" : "No",
+      declDate: document.getElementById("declDate")?.value || null,
+      declPlace: document.getElementById("declPlace")?.value || "",
+
+      mediclaimConsent: document.getElementById("mediclaimConsent")?.value || "",
+
       familyMembers: [],
-      educations: []
+      educations: [],
+      languages: [],
+      ref: []
     };
 
     // 1️⃣ Map Family Members
@@ -3321,8 +3403,34 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
+    // 3️⃣ Map Languages
+    document.querySelectorAll("#languageTable tbody tr").forEach((row, i) => {
+      const name = row.querySelector(`input[name="languages[${i}][name]"]`)?.value;
+      if (name) {
+        data.languages.push({
+          name: name,
+          speak: row.querySelector(`input[name="languages[${i}][speak]"]`)?.checked || false,
+          read: row.querySelector(`input[name="languages[${i}][read]"]`)?.checked || false,
+          write: row.querySelector(`input[name="languages[${i}][write]"]`)?.checked || false
+        });
+      }
+    });
+
+    // 4️⃣ Map References
+    document.querySelectorAll("#referenceSection table tbody tr").forEach((row, i) => {
+      const name = row.querySelector(`input[name="ref[${i}][name]"]`)?.value;
+      if (name) {
+        data.ref.push({
+          name: name,
+          occupation: row.querySelector(`input[name="ref[${i}][occupation]"]`)?.value || "",
+          address: row.querySelector(`input[name="ref[${i}][address]"]`)?.value || ""
+        });
+      }
+    });
+
     return data;
   }
+
 
   async function submitFormOnlineOrOffline(payload) {
     if (!navigator.onLine) {
@@ -3361,9 +3469,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   (async () => {
-    // ✅ REMOVED: Automatic clearDraft() when status is "NEW".
-    // This was clearing local work when a user logged in offline.
-    // Drafts should only be cleared upon SUCCESSFUL submission.
+    if (formStatus === "SUBMITTED") {
+      document.body.innerHTML = `
+        <div style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; background: #f8fafc; color: #0f172a; text-align: center; padding: 20px;">
+          <div style="background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; max-width: 500px;">
+            <div style="font-size: 64px; margin-bottom: 20px;">✅</div>
+            <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 16px;">Already Submitted</h1>
+            <p style="color: #64748b; line-height: 1.6; margin-bottom: 30px;">Thank you! Your onboarding application has already been received and is under review. You don't need to fill it out again.</p>
+            <button onclick="window.location.href='login.html'" style="padding: 12px 30px; background: #1c486e; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">Return to Login</button>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     if (formStatus === "NEW") {
       sessionStorage.removeItem("serverDraft");
     }
@@ -3376,12 +3495,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Initial sync check
     if (navigator.onLine) {
       syncOfflineSubmissions();
     }
   })();
 
-  updateUI();
   updateNextVisualState();
 });

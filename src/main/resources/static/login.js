@@ -25,6 +25,41 @@ if (!navigator.onLine) {
   setTimeout(() => showToast("Working Offline", "offline"), 1000);
 }
 
+// Auto-fill mobile and check deadline from URL if present
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const mobileParam = params.get("mobile");
+  const deadlineParam = params.get("deadline");
+
+  if (deadlineParam) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const deadlineDate = new Date(deadlineParam);
+    deadlineDate.setHours(23, 59, 59, 999); // Deadline is valid until the end of the day
+
+    if (today > deadlineDate) {
+      showToast("This link has expired. The completion deadline was " + deadlineParam, "offline");
+      document.getElementById("loginForm").classList.add("disabled-form");
+      const inputs = document.getElementById("loginForm").querySelectorAll("input, button");
+      inputs.forEach(i => i.disabled = true);
+      const title = document.querySelector(".login-title");
+      if (title) title.innerText = "LINK EXPIRED";
+      const subtitle = document.querySelector(".login-subtitle");
+      if (subtitle) subtitle.innerText = "Please contact HR for a new onboarding link.";
+      return;
+    }
+  }
+
+  if (mobileParam && /^\d{10}$/.test(mobileParam)) {
+    const mobileInput = document.getElementById("loginMobile");
+    if (mobileInput) {
+      mobileInput.value = mobileParam;
+      mobileInput.style.backgroundColor = "#fff9db";
+      showToast("Mobile pre-filled by HR", "online");
+    }
+  }
+});
+
 document.getElementById("loginForm").onsubmit = async (e) => {
   e.preventDefault();
 
@@ -38,9 +73,7 @@ document.getElementById("loginForm").onsubmit = async (e) => {
 
   error.innerText = "";
 
-  const API_BASE = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-    ? "http://localhost:8080"
-    : "https://offlineform.onrender.com";
+  const API_BASE = ""; // Use relative paths for IIS reverse proxy
 
   try {
     const res = await fetch(`${API_BASE}/api/login`, {

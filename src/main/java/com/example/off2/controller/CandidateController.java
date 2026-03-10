@@ -21,18 +21,15 @@ public class CandidateController {
         this.candidateService = candidateService;
     }
 
-    // ================= CREATE Candidate + Family =================
+    // ================= CREATE Candidate =================
     @PostMapping
     @Transactional
     public ResponseEntity<Candidate> createCandidate(@RequestBody Candidate candidate) {
-
-        // Ensure bidirectional mapping
         if (candidate.getFamilyMembers() != null) {
             for (FamilyMember member : candidate.getFamilyMembers()) {
                 member.setCandidate(candidate);
             }
         }
-
         Candidate savedCandidate = candidateService.saveCandidate(candidate);
         return new ResponseEntity<>(savedCandidate, HttpStatus.CREATED);
     }
@@ -47,5 +44,20 @@ public class CandidateController {
     @GetMapping("/{id}")
     public ResponseEntity<CandidateResponseDTO> getCandidateById(@PathVariable Long id) {
         return ResponseEntity.ok(candidateService.getCandidateById(id));
+    }
+
+    // ================= GET Candidate by Phone (for HR review) =================
+    @GetMapping("/by-phone/{phone}")
+    public ResponseEntity<?> getCandidateByPhone(@PathVariable String phone) {
+        return candidateService.findByPhone(phone)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // ================= UPDATE CTC Review (HR only) =================
+    @PutMapping("/{id}/ctc")
+    public ResponseEntity<Candidate> updateCtc(@PathVariable Long id, @RequestBody Candidate ctcData) {
+        Candidate updated = candidateService.updateCandidateCtc(id, ctcData);
+        return ResponseEntity.ok(updated);
     }
 }

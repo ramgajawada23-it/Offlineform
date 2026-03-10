@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Candidate Application - Natco Pharma</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', Arial;
+            background: #f1f5f9;
+            font-size: 11px;
+            color: #0f172a;
+            line-height: 1.3;
+        }
+
+        .print-bar {
+            background: #1c486e;
+            color: white;
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .btn-print {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .page {
+            width: 210mm;
+            margin: 20px auto;
+            background: white;
+            padding: 12mm;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #1c486e;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .logo {
+            height: 45px;
+        }
+
+        .doc-title {
+            text-align: right;
+            color: #1c486e;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .section-head {
+            background: #f1f5f9;
+            color: #1c486e;
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 12px 0 8px;
+            border-left: 4px solid #1c486e;
+        }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px 15px;
+        }
+
+        .field-row {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .field-label {
+            font-size: 8px;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .field-value {
+            font-size: 11px;
+            font-weight: 500;
+            min-height: 14px;
+        }
+
+        .full-width {
+            grid-column: span 3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 5px 0;
+            font-size: 10px;
+        }
+
+        th {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 5px;
+            text-align: left;
+            color: #1c486e;
+            font-weight: 700;
+        }
+
+        td {
+            border: 1px solid #e2e8f0;
+            padding: 5px;
+            vertical-align: top;
+        }
+
+        .sig-img {
+            max-height: 60px;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .ctc-box {
+            border: 2px dashed #1c486e;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        @media print {
+
+            .print-bar,
+            .no-print {
+                display: none !important;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+                width: 100%;
+            }
+
+            .ctc-input {
+                border: none !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+        }
+
+        .ctc-input {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-family: inherit;
+            font-size: 11px;
+            color: #1c486e;
+            font-weight: 600;
+        }
+
+        .btn-save-ctc {
+            background: #1c486e;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-save-ctc:hover {
+            background: #103a5e;
+            transform: translateY(-1px);
+        }
+
+        .btn-save-ctc:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="print-bar">
+        <h2>NATCO PHARMA - COMPLETE APPLICATION REPORT</h2>
+        <div class="btns">
+            <button class="btn-print" onclick="window.print()">PRINT / SAVE PDF</button>
+            <button
+                style="background:none; border:1px solid white; color:white; padding:8px 15px; border-radius:6px; cursor:pointer;"
+                onclick="window.close()">✕ CLOSE</button>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="doc-header">
+            <img src="logo.png" class="logo">
+            <div class="doc-title">Employment Application Form<br><small id="docRef"
+                    style="font-weight:400; color:#64748b;"></small></div>
+        </div>
+
+        <!-- 1. PERSONAL -->
+        <div class="section-head">I. Personal & KYC Details</div>
+        <div class="field-grid">
+            <div class="field-row"><span class="field-label">Full Name</span><span class="field-value"
+                    id="f_name"></span></div>
+            <div class="field-row"><span class="field-label">Date of Birth</span><span class="field-value"
+                    id="f_dob"></span></div>
+            <div class="field-row"><span class="field-label">Gender</span><span class="field-value"
+                    id="f_gender"></span></div>
+            <div class="field-row"><span class="field-label">Place of Birth</span><span class="field-value"
+                    id="f_pob"></span></div>
+            <div class="field-row"><span class="field-label">Nationality</span><span class="field-value"
+                    id="f_nat"></span></div>
+            <div class="field-row"><span class="field-label">Religion</span><span class="field-value" id="f_rel"></span>
+            </div>
+            <div class="field-row"><span class="field-label">Blood Group</span><span class="field-value"
+                    id="f_blood"></span></div>
+            <div class="field-row"><span class="field-label">Marital Status</span><span class="field-value"
+                    id="f_marital"></span></div>
+            <div class="field-row"><span class="field-label">Marriage Date</span><span class="field-value"
+                    id="f_marriageDate"></span></div>
+            <div class="field-row"><span class="field-label">Children Count</span><span class="field-value"
+                    id="f_children"></span></div>
+            <div class="field-row"><span class="field-label">Father's Name</span><span class="field-value"
+                    id="f_father"></span></div>
+            <div class="field-row"><span class="field-label">Mother's Name</span><span class="field-value"
+                    id="f_mother"></span></div>
+            <div class="field-row full-width"><span class="field-label">Permanent Address</span><span
+                    class="field-value" id="f_addr"></span></div>
+            <div class="field-row"><span class="field-label">Email</span><span class="field-value" id="f_email"></span>
+            </div>
+            <div class="field-row"><span class="field-label">Primary Mobile</span><span class="field-value"
+                    id="f_phone"></span></div>
+            <div class="field-row"><span class="field-label">Alternate Mobile</span><span class="field-value"
+                    id="f_altPhone"></span></div>
+        </div>
+
+        <div class="section-head">II. Physical Attributes & Health</div>
+        <div class="field-grid">
+            <div class="field-row"><span class="field-label">Height</span><span class="field-value"
+                    id="f_height"></span></div>
+            <div class="field-row"><span class="field-label">Weight</span><span class="field-value"
+                    id="f_weight"></span></div>
+            <div class="field-row"><span class="field-label">Eyesight</span><span class="field-value"
+                    id="f_eyes"></span></div>
+            <div class="field-row full-width"><span class="field-label">Identification Marks</span><span
+                    class="field-value" id="f_marks"></span></div>
+            <div class="field-row"><span class="field-label">Physical Disability</span><span class="field-value"
+                    id="f_disability"></span></div>
+            <div class="field-row full-width"><span class="field-label">Serious/Prolonged Illness</span><span
+                    class="field-value" id="f_health"></span></div>
+        </div>
+
+        <div class="section-head">III. Statutory & KYC Information</div>
+        <div class="field-grid">
+            <div class="field-row"><span class="field-label">Aadhaar Card</span><span class="field-value"
+                    id="f_aadhaar"></span></div>
+            <div class="field-row"><span class="field-label">PAN Card</span><span class="field-value" id="f_pan"></span>
+            </div>
+            <div class="field-row"><span class="field-label">UAN Number</span><span class="field-value"
+                    id="f_uan"></span></div>
+            <div class="field-row"><span class="field-label">Bank Name</span><span class="field-value"
+                    id="f_bankName"></span></div>
+            <div class="field-row"><span class="field-label">Account Number</span><span class="field-value"
+                    id="f_bankAcc"></span></div>
+            <div class="field-row"><span class="field-label">IFSC / Branch</span><span class="field-value"
+                    id="f_bankDetails"></span></div>
+        </div>
+
+        <div class="section-head">IV. Language Proficiency</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Language</th>
+                    <th>Speak</th>
+                    <th>Read</th>
+                    <th>Write</th>
+                    <th>Mother Tongue</th>
+                </tr>
+            </thead>
+            <tbody id="f_lang"></tbody>
+        </table>
+
+        <div class="section-head">V. Family Members Detail</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Relation</th>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                    <th>Occupation</th>
+                    <th>Dependent</th>
+                    <th>Income (Rs)</th>
+                </tr>
+            </thead>
+            <tbody id="f_family"></tbody>
+        </table>
+
+        <div class="section-head">VI. Educational Background</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Qualification</th>
+                    <th>College/University</th>
+                    <th>Board</th>
+                    <th>Degree/Stream</th>
+                    <th>Year</th>
+                    <th>Aggregate %</th>
+                </tr>
+            </thead>
+            <tbody id="f_edu"></tbody>
+        </table>
+
+        <div class="section-head">VII. Professional References</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Occupation</th>
+                    <th>Address / Contact</th>
+                </tr>
+            </thead>
+            <tbody id="f_ref"></tbody>
+        </table>
+        <div class="field-grid" style="margin-top:5px;">
+            <div class="field-row full-width"><span class="field-label">Any objection to contacting present employer / references?</span><span class="field-value" id="f_objection"></span></div>
+        </div>
+
+        <div class="section-head">VIII. Self Assessment & Skills</div>
+        <div class="field-grid">
+            <div class="field-row full-width"><span class="field-label">Academic Achievements</span><span
+                    class="field-value" id="f_academicAch"></span></div>
+            <div class="field-row"><span class="field-label">Professional Body Member?</span><span class="field-value"
+                    id="f_profBody"></span></div>
+            <div class="field-row full-width"><span class="field-label">Professional Body Details</span><span class="field-value"
+                    id="f_profBodyDetails"></span></div>
+            <div class="field-row"><span class="field-label">Special Honors?</span><span class="field-value"
+                    id="f_honors"></span></div>
+            <div class="field-row full-width"><span class="field-label">Honors Details</span><span class="field-value"
+                    id="f_honorsDetails"></span></div>
+            <div class="field-row full-width"><span class="field-label">Publications</span><span class="field-value"
+                    id="f_publications"></span></div>
+            <div class="field-row full-width"><span class="field-label">Strengths</span><span class="field-value"
+                    id="f_strengths"></span></div>
+            <div class="field-row full-width"><span class="field-label">Weaknesses</span><span class="field-value"
+                    id="f_weaknesses"></span></div>
+            <div class="field-row full-width"><span class="field-label">Personal Values</span><span class="field-value"
+                    id="f_values"></span></div>
+        </div>
+    </div>
+
+    <div class="page page-break">
+        <div class="section-head">IX. Extra Curricular Activities</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Literary / Cultural</th>
+                    <th>Sports</th>
+                    <th>Hobbies</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="f_literary"></td>
+                    <td id="f_sports"></td>
+                    <td id="f_hobbies"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-head">X. Sales / Marketing Assignments</div>
+        <div class="field-grid">
+            <div class="field-row full-width"><span class="field-label">Company & HQ</span><span class="field-value"
+                    id="f_asgnComp"></span></div>
+            <div class="field-row full-width"><span class="field-label">Products Handled</span><span class="field-value"
+                    id="f_asgnProd"></span></div>
+            <div class="field-row"><span class="field-label">Territories Operating</span><span class="field-value"
+                    id="f_asgnTerr"></span></div>
+            <div class="field-row full-width"><span class="field-label">Major Contribution</span><span
+                    class="field-value" id="f_asgnCont"></span></div>
+        </div>
+
+
+        <div class="section-head">XI. Professional History (Recent Employer)</div>
+        <div class="field-grid">
+            <div class="field-row full-width"><span class="field-label">Company Name & Location</span><span
+                    class="field-value" id="f_company"></span></div>
+            <div class="field-row"><span class="field-label">Designation</span><span class="field-value"
+                    id="f_designation"></span></div>
+            <div class="field-row"><span class="field-label">Reporting To</span><span class="field-value"
+                    id="f_reporting"></span></div>
+            <div class="field-row"><span class="field-label">Duration</span><span class="field-value"
+                    id="f_duration"></span></div>
+            <div class="field-row"><span class="field-label">Gross Salary while Leaving</span><span class="field-value"
+                    id="f_grossLeaving"></span></div>
+            <div class="field-row full-width"><span class="field-label">Reason for Leaving</span><span
+                    class="field-value" id="f_reason"></span></div>
+            <div class="field-row full-width"><span class="field-label">Key Responsibilities</span><span
+                    class="field-value" id="f_jobResp"></span></div>
+        </div>
+
+        <div class="section-head">XII. Present Salary Breakup</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>(a) Monthly Benefits</th>
+                    <th>Rs.</th>
+                    <th>(b) Deferred Benefits</th>
+                    <th>Rs.</th>
+                    <th>(c) Statutory & Security Benefits</th>
+                    <th>Rs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Basic</td>
+                    <td id="s_basic"></td>
+                    <td>LTA</td>
+                    <td id="s_lta"></td>
+                    <td>PF</td>
+                    <td id="s_pf"></td>
+                </tr>
+                <tr>
+                    <td>DA</td>
+                    <td id="s_da"></td>
+                    <td>Medical</td>
+                    <td id="s_med"></td>
+                    <td>Gratuity</td>
+                    <td id="s_grat"></td>
+                </tr>
+                <tr>
+                    <td>Conveyance Allowance</td>
+                    <td id="s_conv"></td>
+                    <td>Bonus / Ex-gratia</td>
+                    <td id="s_bonus"></td>
+                    <td>Superannuation</td>
+                    <td id="s_super"></td>
+                </tr>
+                <tr>
+                    <td>Education Allowance</td>
+                    <td id="s_edu_al"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>House Rent Allowance</td>
+                    <td id="s_hra_al"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr style="background:#f1f5f9; font-weight:700;">
+                    <td>Total (a)</td>
+                    <td id="s_totalA"></td>
+                    <td>Total (b)</td>
+                    <td id="s_totalB"></td>
+                    <td>Total (c)</td>
+                    <td id="s_totalC"></td>
+                </tr>
+                <tr style="background:#1c486e; color:white; font-weight:700;">
+                    <td colspan="4">Total Earnings Per Month (a+b+c) = <span id="s_totalM"></span></td>
+                    <td colspan="2">Total Earnings Per Annum = <span id="s_totalY"></span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="field-row full-width" style="margin-top:5px;">
+            <span class="field-label">Other Perquisites</span>
+            <span class="field-value" id="f_otherPerks"></span>
+        </div>
+
+        <div class="section-head">XIII. Proposed CTC Breakup (HR Proposed)</div>
+        <div class="ctc-grid" style="display: flex; flex-direction: column; gap: 15px; margin: 10px 0;">
+            <!-- Table 1 -->
+            <table>
+                <thead>
+                    <tr>
+                        <th width="40%">(a) Monthly Benefits</th>
+                        <th width="20%">By Candidate</th>
+                        <th width="20%">By HR</th>
+                        <th width="20%">Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Basic</td><td id="c_basic"></td><td><input type="number" class="ctc-input" id="hr_basic"></td><td id="fin_basic"></td></tr>
+                    <tr><td>DA</td><td id="c_da"></td><td><input type="number" class="ctc-input" id="hr_da"></td><td id="fin_da"></td></tr>
+                    <tr><td>Conv. Allowance</td><td id="c_conv"></td><td><input type="number" class="ctc-input" id="hr_conv"></td><td id="fin_conv"></td></tr>
+                    <tr><td>Educ. Allowance</td><td id="c_edu_al"></td><td><input type="number" class="ctc-input" id="hr_edu_al"></td><td id="fin_edu_al"></td></tr>
+                    <tr><td>House Rent Allowance</td><td id="c_hra_al"></td><td><input type="number" class="ctc-input" id="hr_hra_al"></td><td id="fin_hra_al"></td></tr>
+                    <tr><td>Others (Please specify)</td><td id="c_other_a"></td><td><input type="number" class="ctc-input" id="hr_other_a"></td><td id="fin_other_a"></td></tr>
+                    <tr style="font-weight:700; background:#f1f5f9;"><td>Total (a)</td><td id="c_totalA"></td><td id="hr_totalA"></td><td id="fin_totalA"></td></tr>
+                </tbody>
+            </table>
+
+            <!-- Table 2 -->
+            <table>
+                <thead>
+                    <tr>
+                        <th width="40%">(b) Deferred Benefits <small>(Monthly terms)</small></th>
+                        <th width="20%">By Candidate</th>
+                        <th width="20%">By HR</th>
+                        <th width="20%">Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>LTA</td><td id="c_lta"></td><td><input type="number" class="ctc-input" id="hr_lta"></td><td id="fin_lta"></td></tr>
+                    <tr><td>Medical</td><td id="c_med"></td><td><input type="number" class="ctc-input" id="hr_med"></td><td id="fin_med"></td></tr>
+                    <tr><td>Bonus / Ex gratia</td><td id="c_bonus"></td><td><input type="number" class="ctc-input" id="hr_bonus"></td><td id="fin_bonus"></td></tr>
+                    <tr style="font-weight:700; background:#f1f5f9;"><td>Total(b)</td><td id="c_totalB"></td><td id="hr_totalB"></td><td id="fin_totalB"></td></tr>
+                </tbody>
+            </table>
+
+            <!-- Table 3 -->
+            <table>
+                <thead>
+                    <tr>
+                        <th width="40%">(c) Statutory & Security Benefits <small>(Monthly terms)</small></th>
+                        <th width="20%">By Candidate</th>
+                        <th width="20%">By HR</th>
+                        <th width="20%">Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>PF</td><td id="c_pf"></td><td><input type="number" class="ctc-input" id="hr_pf"></td><td id="fin_pf"></td></tr>
+                    <tr><td>Gratuity</td><td id="c_grat"></td><td><input type="number" class="ctc-input" id="hr_grat"></td><td id="fin_grat"></td></tr>
+                    <tr><td>Superannuation</td><td id="c_super"></td><td><input type="number" class="ctc-input" id="hr_super"></td><td id="fin_super"></td></tr>
+                    <tr style="font-weight:700; background:#f1f5f9;"><td>Total (c)</td><td id="c_totalC"></td><td id="hr_totalC"></td><td id="fin_totalC"></td></tr>
+                </tbody>
+            </table>
+
+            <!-- Aggregate -->
+            <table style="border:2px solid #1c486e;">
+                <tr style="font-weight:700; background:#e2e8f0; font-size:12px;">
+                    <td style="width:40%;">Total Earnings Per Month (a+b+c) Rs.</td>
+                    <td style="width:20%;" id="c_totalGross"></td>
+                    <td style="width:20%;" id="hr_totalGross"></td>
+                    <td style="width:20%;" id="fin_totalGross"></td>
+                </tr>
+                <tr style="font-weight:700; background:#1c486e; color:white; font-size:12px;">
+                    <td style="width:40%;">Total Earnings Per annum Rs.</td>
+                    <td style="width:20%;" id="c_totalAnnum"></td>
+                    <td style="width:20%;" id="hr_totalAnnum"></td>
+                    <td style="width:20%;" id="fin_totalAnnum"></td>
+                </tr>
+            </table>
+
+            <div class="field-row full-width" style="margin-top:10px;">
+                <span class="field-label">HR Feedback / Remarks</span>
+                <textarea class="ctc-input" id="r_remarks_in" rows="2" style="font-style:italic;"></textarea>
+            </div>
+
+            <div class="no-print" style="display:flex; justify-content:flex-end;">
+                <button id="btnSaveCtc" class="btn-save-ctc">
+                    <span></span> SAVE CTC REVIEW
+                </button>
+            </div>
+        </div>
+
+        <div class="section-head">XIV. Other Particulars</div>
+        <div class="field-grid">
+            <div class="field-row"><span class="field-label">Interviewed Before?</span><span class="field-value"
+                    id="f_intBefore"></span></div>
+            <div class="field-row"><span class="field-label">Interview Details</span><span class="field-value"
+                    id="f_intDetails"></span></div>
+            <div class="field-row"><span class="field-label">Notice Period</span><span class="field-value"
+                    id="f_notice"></span></div>
+            <div class="field-row"><span class="field-label">Mediclaim Interested?</span><span class="field-value"
+                    id="f_mediclaim"></span></div>
+            <div class="field-row"><span class="field-label">Any Loan Availed?</span><span class="field-value"
+                    id="f_loanAvailed"></span></div>
+            <div class="field-row full-width"><span class="field-label">Loan Details (Purpose/Amt/Balance)</span><span
+                    class="field-value" id="f_loanDetails"></span></div>
+        </div>
+
+        <div class="section-head">XV. Declaration & Signature</div>
+        <div
+            style="font-size:10px; color:#64748b; border:1px solid #e2e8f0; padding:10px; border-radius:5px; margin-bottom:15px;">
+            I hereby declare that the information provided by me in this application form is true and genuine. Should
+            any info be found false, Natco Pharma Limited is at liberty to terminate my services.
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:20px;">
+            <div style="text-align:left;">
+                <div style="font-size:10px; color:#64748b;">Applicant's Signature</div>
+                <img id="f_signature" class="sig-img">
+                <div style="border-top:1px solid #000; width:150px; margin-top:5px;"></div>
+                <div style="font-size:9px; margin-top:5px;"><b>Date:</b> <span id="f_declDate"></span> | <b>Place:</b>
+                    <span id="f_declPlace"></span>
+                </div>
+            </div>
+
+            <div style="text-align:center;">
+                <div style="border-top:1px solid #000; width:150px; margin-top:50px;"></div>
+                <div style="font-size:10px; font-weight:700; margin-top:5px;">HR Manager</div>
+            </div>
+
+            <div style="text-align:right;">
+                <div style="border-top:1px solid #000; width:150px; margin-top:50px;"></div>
+                <div style="font-size:10px; font-weight:700; margin-top:5px;">Business Head</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fmt = (v) => v ? '₹' + Number(v).toLocaleString('en-IN') : '—';
+        const val = (v) => v || '—';
+
+        async function loadFullData() {
+            const id = new URLSearchParams(window.location.search).get('id');
+            if (!id) return;
+
+            try {
+                const res = await fetch(`/api/candidates/${id}`);
+                const c = await res.json();
+
+                document.getElementById('docRef').innerText = `Ref: NATCO/APP/${c.id || 'N1'}`;
+
+                // Personal & KYC
+                document.getElementById('f_name').innerText = val(c.fullName);
+                document.getElementById('f_dob').innerText = val(c.dob);
+                document.getElementById('f_gender').innerText = val(c.gender);
+                document.getElementById('f_pob').innerText = val(c.placeOfBirth);
+                document.getElementById('f_nat').innerText = val(c.nationality);
+                document.getElementById('f_rel').innerText = val(c.religion);
+                document.getElementById('f_blood').innerText = val(c.bloodGroup);
+                document.getElementById('f_marital').innerText = val(c.maritalStatus);
+                document.getElementById('f_marriageDate').innerText = val(c.marriageDate);
+                document.getElementById('f_children').innerText = val(c.childrenCount);
+                document.getElementById('f_father').innerText = val(c.fatherName);
+                document.getElementById('f_mother').innerText = val(c.motherName);
+                document.getElementById('f_addr').innerText = val(c.permanentAddress);
+                document.getElementById('f_email').innerText = val(c.email);
+                document.getElementById('f_phone').innerText = val(c.phone);
+                document.getElementById('f_altPhone').innerText = val(c.alternateMobile);
+
+                // Health
+                document.getElementById('f_height').innerText = val(c.height);
+                document.getElementById('f_weight').innerText = val(c.weight);
+                document.getElementById('f_eyes').innerText = val(c.eyesight);
+                document.getElementById('f_marks').innerText = val(c.identificationMarks);
+                document.getElementById('f_disability').innerText = val(c.disability);
+                document.getElementById('f_health').innerText = c.illness === 'Yes' ? `${c.illnessName} (${c.illnessDuration})` : 'None';
+
+                // Statutory
+                document.getElementById('f_aadhaar').innerText = val(c.aadhaar);
+                document.getElementById('f_pan').innerText = val(c.pan);
+                document.getElementById('f_uan').innerText = val(c.uan);
+                document.getElementById('f_bankName').innerText = val(c.bankName);
+                document.getElementById('f_bankAcc').innerText = val(c.bankAccount);
+                document.getElementById('f_bankDetails').innerText = `${val(c.ifsc)} / ${val(c.branch)}`;
+
+                // Family & Education
+                document.getElementById('f_family').innerHTML = (c.familyMembers || []).map(m => `<tr><td>${m.relationship}</td><td>${m.name}</td><td>${m.dob}</td><td>${m.occupation}</td><td>${m.dependent}</td><td>${m.income || 0}</td></tr>`).join('');
+                document.getElementById('f_edu').innerHTML = (c.educations || []).map(e => `<tr><td>${e.qualification}</td><td>${e.college}</td><td>${e.board}</td><td>${e.degree}/${e.stream}</td><td>${e.joiningYear}-${e.leavingYear}</td><td>${e.aggregatePercent}%</td></tr>`).join('');
+                document.getElementById('f_lang').innerHTML = (c.languages || []).map((l, idx) => `<tr><td>${l.name}</td><td>${l.speak ? 'YES' : '—'}</td><td>${l.read ? 'YES' : '—'}</td><td>${l.write ? 'YES' : '—'}</td><td>${parseInt(c.motherTongue) === idx ? 'YES' : '—'}</td></tr>`).join('');
+                document.getElementById('f_ref').innerHTML = (c.ref || []).map(r => `<tr><td>${r.name}</td><td>${r.occupation}</td><td>${r.address}</td></tr>`).join('');
+                
+                const objectionField = document.getElementById('f_objection');
+                if (objectionField) objectionField.innerText = val(c.objectionToRefer);
+
+                // Self Assessment
+                document.getElementById('f_academicAch').innerText = val(c.academicAchieved);
+                document.getElementById('f_profBody').innerText = val(c.memberOfProfessionalBody);
+                document.getElementById('f_profBodyDetails').innerText = val(c.professionalBodyDetails);
+                document.getElementById('f_honors').innerText = val(c.specialHonors);
+                document.getElementById('f_honorsDetails').innerText = val(c.specialHonorsDetails);
+                document.getElementById('f_publications').innerText = val(c.publicationsDetails);
+                document.getElementById('f_strengths').innerText = val(c.strengths);
+                document.getElementById('f_weaknesses').innerText = val(c.weaknesses);
+                document.getElementById('f_values').innerText = val(c.valuesContent);
+
+                // Extra Curricular
+                document.getElementById('f_literary').innerText = val(c.activityLiterary);
+                document.getElementById('f_sports').innerText = val(c.activitySports);
+                document.getElementById('f_hobbies').innerText = val(c.activityHobbies);
+
+                // Sales Assignments
+                document.getElementById('f_asgnComp').innerText = val(c.assignmentCompany);
+                document.getElementById('f_asgnProd').innerText = val(c.assignmentProducts);
+                document.getElementById('f_asgnTerr').innerText = val(c.assignmentTerritory);
+                document.getElementById('f_asgnCont').innerText = val(c.assignmentContribution);
+
+                // Professional History
+                document.getElementById('f_company').innerText = val(c.companyName);
+                document.getElementById('f_designation').innerText = val(c.designation);
+                document.getElementById('f_reporting').innerText = val(c.reportingTo);
+                document.getElementById('f_duration').innerText = (c.expFrom && c.expTo) ? `${c.expFrom} to ${c.expTo}` : '—';
+                document.getElementById('f_grossLeaving').innerText = fmt(c.grossSalaryLeaving);
+                document.getElementById('f_reason').innerText = val(c.reasonForLeaving);
+                document.getElementById('f_jobResp').innerText = val(c.jobResponsibilities);
+
+                // Salary Table XII
+                document.getElementById('s_basic').innerText = fmt(c.salary_basic);
+                document.getElementById('s_da').innerText = fmt(c.salary_da);
+                document.getElementById('s_conv').innerText = fmt(c.salary_conveyance);
+                document.getElementById('s_edu_al').innerText = fmt(c.salary_education);
+                document.getElementById('s_hra_al').innerText = fmt(c.salary_hra);
+                document.getElementById('s_lta').innerText = fmt(c.salary_lta);
+                document.getElementById('s_med').innerText = fmt(c.salary_medical);
+                document.getElementById('s_bonus').innerText = fmt(c.salary_bonus);
+                document.getElementById('s_pf').innerText = fmt(c.salary_pf);
+                document.getElementById('s_grat').innerText = fmt(c.salary_gratuity);
+                document.getElementById('s_super').innerText = fmt(c.salary_superannuation);
+                document.getElementById('s_totalA').innerText = fmt(c.totalA);
+                document.getElementById('s_totalB').innerText = fmt(c.totalB);
+                document.getElementById('s_totalC').innerText = fmt(c.totalC);
+                document.getElementById('s_totalM').innerText = fmt(c.monthlyTotal);
+                document.getElementById('s_totalY').innerText = fmt(c.annualTotal);
+                document.getElementById('f_otherPerks').innerText = val(c.otherPerquisites);
+
+                // Populate Candidate Column in XIII
+                document.getElementById('c_basic').innerText = fmt(c.salary_basic);
+                document.getElementById('c_da').innerText = fmt(c.salary_da);
+                document.getElementById('c_conv').innerText = fmt(c.salary_conveyance);
+                document.getElementById('c_edu_al').innerText = fmt(c.salary_education);
+                document.getElementById('c_hra_al').innerText = fmt(c.salary_hra);
+                document.getElementById('c_other_a').innerText = fmt(0);
+                document.getElementById('c_totalA').innerText = fmt(c.totalA);
+
+                document.getElementById('c_lta').innerText = fmt(c.salary_lta);
+                document.getElementById('c_med').innerText = fmt(c.salary_medical);
+                document.getElementById('c_bonus').innerText = fmt(c.salary_bonus);
+                document.getElementById('c_totalB').innerText = fmt(c.totalB);
+
+                document.getElementById('c_pf').innerText = fmt(c.salary_pf);
+                document.getElementById('c_grat').innerText = fmt(c.salary_gratuity);
+                document.getElementById('c_super').innerText = fmt(c.salary_superannuation);
+                document.getElementById('c_totalC').innerText = fmt(c.totalC);
+
+                document.getElementById('c_totalGross').innerText = fmt(c.monthlyTotal);
+                document.getElementById('c_totalAnnum').innerText = fmt(c.annualTotal);
+
+                // Initialize HR Inputs (from previously saved or fallback to candidate values)
+                document.getElementById('hr_basic').value = c.ctcBasic || c.salary_basic || '';
+                document.getElementById('hr_da').value = c.salary_da || '';
+                document.getElementById('hr_conv').value = c.salary_conveyance || '';
+                document.getElementById('hr_edu_al').value = c.salary_education || '';
+                document.getElementById('hr_hra_al').value = c.ctcHra || c.salary_hra || '';
+                document.getElementById('hr_other_a').value = c.ctcOther || '';
+
+                document.getElementById('hr_lta').value = c.salary_lta || '';
+                document.getElementById('hr_med').value = c.salary_medical || '';
+                document.getElementById('hr_bonus').value = c.salary_bonus || '';
+
+                document.getElementById('hr_pf').value = c.salary_pf || '';
+                document.getElementById('hr_grat').value = c.salary_gratuity || '';
+                document.getElementById('hr_super').value = c.salary_superannuation || '';
+
+                document.getElementById('r_remarks_in').value = c.ctcRemarks || '';
+
+                // Add Calculate Logic
+                const calcRow = (idPrefix) => {
+                    const hrVal = parseFloat(document.getElementById(`hr_${idPrefix}`).value || 0);
+                    document.getElementById(`fin_${idPrefix}`).innerText = fmt(hrVal);
+                    return hrVal;
+                };
+
+                const updateCalc = () => {
+                    const tA = calcRow('basic') + calcRow('da') + calcRow('conv') + calcRow('edu_al') + calcRow('hra_al') + calcRow('other_a');
+                    document.getElementById('hr_totalA').innerText = fmt(tA);
+                    document.getElementById('fin_totalA').innerText = fmt(tA);
+
+                    const tB = calcRow('lta') + calcRow('med') + calcRow('bonus');
+                    document.getElementById('hr_totalB').innerText = fmt(tB);
+                    document.getElementById('fin_totalB').innerText = fmt(tB);
+
+                    const tC = calcRow('pf') + calcRow('grat') + calcRow('super');
+                    document.getElementById('hr_totalC').innerText = fmt(tC);
+                    document.getElementById('fin_totalC').innerText = fmt(tC);
+
+                    const tGross = tA + tB + tC;
+                    document.getElementById('hr_totalGross').innerText = fmt(tGross);
+                    document.getElementById('fin_totalGross').innerText = fmt(tGross);
+                    document.getElementById('hr_totalAnnum').innerText = fmt(tGross * 12);
+                    document.getElementById('fin_totalAnnum').innerText = fmt(tGross * 12);
+                };
+
+                document.querySelectorAll('.ctc-input').forEach(el => {
+                    if (el.id.startsWith('hr_')) {
+                        el.addEventListener('input', updateCalc);
+                    }
+                });
+                
+                // Initial calculation run
+                updateCalc();
+
+                // Add Save Button Logic
+                document.getElementById('btnSaveCtc').onclick = async function () {
+                    const btn = this;
+                    btn.disabled = true;
+                    btn.innerText = "SAVING...";
+
+                    const ctcPayload = {
+                        ctcBasic: parseFloat(document.getElementById('hr_basic').value || 0),
+                        ctcHra: parseFloat(document.getElementById('hr_hra_al').value || 0),
+                        ctcOther: parseFloat(document.getElementById('hr_other_a').value || 0),
+                        offeredCtc: parseFloat(document.getElementById('fin_totalGross').innerText.replace(/[₹, ]/g,'') || 0) * 12, // assuming offeredCtc is Annual Gross or Monthly Gross, using Annual
+                        ctcRemarks: document.getElementById('r_remarks_in').value,
+                        ctcReviewDone: true
+                    };
+
+                    try {
+                        const updateRes = await fetch(`/api/candidates/${c.id}/ctc`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(ctcPayload)
+                        });
+
+                        if (updateRes.ok) {
+                            alert("✅ CTC Details Saved Successfully!");
+                            btn.innerText = "SAVE CTC REVIEW";
+                        } else {
+                            throw new Error("Update failed");
+                        }
+                    } catch (err) {
+                        alert("❌ Error saving CTC: " + err.message);
+                        btn.innerText = "SAVE CTC REVIEW";
+                    } finally {
+                        btn.disabled = false;
+                    }
+                };
+
+                // Other
+                document.getElementById('f_intBefore').innerText = val(c.interviewedBefore);
+                document.getElementById('f_intDetails').innerText = c.interviewedBefore === 'Yes' ? `${c.interviewDate} @ ${c.interviewPlace} (Interviewer: ${c.interviewerName}, Post: ${c.interviewPost})` : 'N/A';
+                document.getElementById('f_notice').innerText = `${c.joiningDays || 0} Days`;
+                document.getElementById('f_mediclaim').innerText = val(c.mediclaimConsent);
+                document.getElementById('f_loanAvailed').innerText = val(c.loanAvailed);
+                document.getElementById('f_loanDetails').innerText = c.loanAvailed === 'Yes' ? `${c.loanPurpose} / Amt: ${c.loanAmount} / Bal: ${c.loanBalance} / Deduct: ${c.loanSalary}` : 'N/A';
+
+                // Sign & Data
+                document.getElementById('f_declDate').innerText = val(c.declDate);
+                document.getElementById('f_declPlace').innerText = val(c.declPlace);
+                if (c.signatureBase64) document.getElementById('f_signature').src = c.signatureBase64;
+
+            } catch (e) {
+                console.error(e);
+                alert("Error loading candidate data: " + e.message);
+            }
+        }
+        window.onload = loadFullData;
+    </script>
+</body>
+
+</html>

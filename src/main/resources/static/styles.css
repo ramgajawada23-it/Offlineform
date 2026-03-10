@@ -977,3 +977,9 @@ textarea.error,
 .toast-icon {
   font-size: 20px;
 }
+
+.disabled-form {
+  opacity: 0.5;
+  filter: grayscale(1);
+  pointer-events: none;
+}

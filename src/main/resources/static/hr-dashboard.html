@@ -1,482 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Dashboard | Onboarding Agreement</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>HR Portal | Natco Pharma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #dad1d1;
-            --primary-light: #1c486e;
-            --primary-dark: #1c486e;
-            --secondary:#1c486e
-            --bg-light: #f1f5f9;
-            --card-bg: #ffffff;
-            --header-bg: #f8fafc;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
+            --primary: #1c486e;
+            --primary-light: #2c5e8c;
+            --secondary: #10b981;
+            --bg: #f0f4f8;
             --border: #e2e8f0;
-            --input-bg: #ffffff;
+            --text-muted: #64748b;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
 
         body {
             min-height: 100vh;
-            background: radial-gradient(circle at top left, #ffffff, #ffffff);
-            color: var(--text-main);
+            background: linear-gradient(135deg, #1c486e 0%, #0f2d45 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Login Overlay ── */
+        #authOverlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1c486e 0%, #0f2d45 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            z-index: 999;
+            flex-direction: column;
         }
-
-        .container {
-            max-width: 900px;
-            width: 100%;
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
+        .auth-card {
+            background: white;
+            padding: 55px 50px;
             border-radius: 32px;
-            border: 1px solid var(--border);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            overflow: hidden;
-            animation: slideUp 0.8s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header {
-            padding: 40px;
-            background: var(--header-bg);
-            border-bottom: 1px solid var(--border);
+            width: 90%;
+            max-width: 420px;
             text-align: center;
+            box-shadow: 0 40px 80px -15px rgba(0,0,0,0.4);
         }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 700;
-            background: linear-gradient(to right, #1311a7, #ac2121);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
+        .auth-logo { font-size: 48px; margin-bottom: 15px; }
+        .auth-card h2 { font-size: 26px; font-weight: 900; color: var(--primary); margin-bottom: 6px; }
+        .auth-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+        .auth-card input {
+            width: 100%; padding: 15px; border: 2px solid var(--border);
+            border-radius: 14px; text-align: center;
+            outline: none; margin-bottom: 20px;
+            font-family: 'Outfit', sans-serif;
+            transition: border-color 0.2s;
         }
-
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 16px;
+        .auth-card input[type="text"] { font-size: 18px; }
+        .auth-card input[type="password"] { font-size: 22px; letter-spacing: 8px; }
+        .auth-card input:focus { border-color: var(--primary); }
+        .btn-login {
+            width: 100%; padding: 16px; background: var(--primary);
+            color: white; border: none; border-radius: 14px; font-size: 16px;
+            font-weight: 700; cursor: pointer; letter-spacing: 1px;
+            transition: all 0.2s; font-family: 'Outfit', sans-serif;
         }
+        .btn-login:hover { background: var(--primary-light); transform: translateY(-2px); }
+        #authError { color: #ef4444; font-size: 13px; margin-top: 12px; display: none; }
 
-        .content {
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .section {
-            margin-bottom: 32px;
-        }
-
-        .section h2 {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--primary-light);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section h2::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        textarea,
-        select {
+        /* ── Portal ── */
+        #portalPage {
+            display: none;
             width: 100%;
-            padding: 12px 16px;
-            background: var(--input-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text-main);
-            font-size: 15px;
-            transition: all 0.3s ease;
-            outline: none;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
         }
 
-        input:focus,
-        textarea:focus,
-        select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-            background: #fff;
+        nav {
+            width: 100%;
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(10px);
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-brand { color: white; font-size: 20px; font-weight: 800; letter-spacing: 0.5px; }
+        nav img { height: 50px; filter: brightness(0) invert(1); opacity: 0.85; }
+
+        .portal-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
         }
 
-        textarea {
-            height: 100px;
-            resize: none;
-        }
-
-        .file-upload-wrapper {
-            position: relative;
-            padding: 20px;
-            border: 2px dashed var(--border);
-            border-radius: 16px;
+        .welcome-text {
             text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .file-upload-wrapper:hover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.05);
-        }
-
-        .settings-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .setting-item {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 13px;
-        }
-
-        .setting-item span {
-            display: block;
-            color: var(--text-muted);
-            font-size: 11px;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .setting-item strong {
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        .recipient-card {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border);
-        }
-
-        .recipient-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .badge {
-            padding: 4px 12px;
-            background: var(--primary);
-            border-radius: 100px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .footer {
-            padding: 30px 40px;
-            background: #f8fafc;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn-send {
-            padding: 16px 40px;
-            background:#1c486e;
+            margin-bottom: 60px;
             color: white;
+        }
+        .welcome-text h1 { font-size: 38px; font-weight: 900; margin-bottom: 10px; }
+        .welcome-text p { font-size: 16px; opacity: 0.7; }
+
+        .portal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .portal-btn {
+            background: white;
             border: none;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 15px -3px rgba(3, 28, 112, 0.4);
+            border-radius: 22px;
+            padding: 28px 40px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            text-align: left;
+        }
+        .portal-btn:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+        .portal-btn .icon { font-size: 42px; flex-shrink: 0; }
+        .portal-btn .btn-text h3 {
+            font-size: 20px; font-weight: 800;
+            color: var(--primary); margin-bottom: 4px;
+        }
+        .portal-btn .btn-text p { font-size: 13px; color: var(--text-muted); }
+        .portal-btn .arrow {
+            margin-left: auto; font-size: 22px; color: var(--primary); opacity: 0.4;
         }
 
-        .btn-send:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.5);
-        }
-
-        .btn-send:active {
-            transform: translateY(0);
-        }
-
-        .btn-send:disabled {
-            background: #475569;
-            box-shadow: none;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .status-toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            padding: 16px 24px;
-            border-radius: 12px;
-            background: #10b981;
+        .logout-btn {
+            margin-top: 50px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
             color: white;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 1000;
-            animation: fadeInRight 0.3s ease-out;
+            padding: 10px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s;
         }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .loader {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: none;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        .logout-btn:hover { background: rgba(255,255,255,0.25); }
     </style>
 </head>
-
 <body>
 
-    <div class="container">
-        <header class="header">
-            <h1>Onboarding Form</h1>
-            <p class="subtitle">Prepare and send agreement for electronic signature</p>
-        </header>
-
-        <div class="content">
-            <!-- Left Column: Details & Settings -->
-            <div class="left-col">
-                <div class="section">
-                    <h2>Agreement Details</h2>
-
-                    <div class="form-group">
-                        <label>Candidate Form Link</label>
-                        <div style="position: relative;">
-                            <input type="text" id="formLink" value="http://localhost:8080/index.html"
-                                placeholder="Enter form URL...">
-                            <span style="position: absolute; right: 12px; top: 11px; cursor: help;"
-                                title="This link will be sent in the email">🔗</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Agreement Name</label>
-                        <input type="text" id="agreementName" value="Onboarding Form">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea id="message" placeholder="Please sign the onboarding document attached."></textarea>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2>Agreement Settings</h2>
-                    <div class="settings-grid">
-                        <div class="setting-item">
-                            <span>Completion deadline</span>
-                            <strong>None</strong>
-                        </div>
-                        <div class="setting-item">
-                            <span>Reminder frequency</span>
-                            <strong>None</strong>
-                        </div>
-                        <div class="setting-item">
-                            <span>Password</span>
-                            <strong>None</strong>
-                        </div>
-                        <div class="setting-item">
-                            <span>Signature type</span>
-                            <strong>Electronic</strong>
-                        </div>
-                        <div class="setting-item">
-                            <span>Language</span>
-                            <strong>English</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Column: Recipients & CC -->
-            <div class="right-col">
-                <div class="section">
-                    <h2>Add Recipients</h2>
-
-                    <div class="recipient-card">
-                        <div class="recipient-header">
-                            <label>Candidate</label>
-                            <span class="badge">Signer</span>
-                        </div>
-                        <input type="email" id="candidateEmail" placeholder="candidate@email.com">
-                    </div>
-
-                    <div class="recipient-card">
-                        <div class="recipient-header">
-                            <label>HR Manager</label>
-                            <select style="width: auto; padding: 4px 12px; font-size: 11px; height: auto;">
-                                <option>Approver</option>
-                                <option>Signer</option>
-                            </select>
-                        </div>
-                        <input type="email" id="hrEmail" placeholder="hr@company.com">
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2>CC</h2>
-                    <div class="form-group">
-                        <label>CC Emails (separated by comma)</label>
-                        <input type="text" id="ccEmails" placeholder="finance@company.com, legal@company.com">
-                    </div>
-                </div>
+    <!-- LOGIN OVERLAY -->
+    <div id="authOverlay">
+        <div class="auth-card" id="loginCard">
+            <div class="auth-logo">🏢</div>
+            <h2>HR Portal Access</h2>
+            <p>Enter your secure credentials to continue</p>
+            <input type="text" id="hrUsername" placeholder="Username" 
+                onkeydown="if(event.key==='Enter') document.getElementById('hrPasscode').focus()">
+            <input type="password" id="hrPasscode" placeholder="••••••••" maxlength="10"
+                onkeydown="if(event.key==='Enter') verifyHR()">
+            <button class="btn-login" onclick="verifyHR()">ENTER PORTAL</button>
+            <p id="authError">❌ Incorrect Username or Passcode.</p>
+            <div style="margin-top:20px;">
+                <a href="#" onclick="togglePasswordChange(true)" style="color:var(--text-muted); font-size:13px; text-decoration:none;">Change Passcode</a>
             </div>
         </div>
 
-        <footer class="footer">
-            <button class="btn-send" id="sendBtn" onclick="sendForm()">
-                <div class="loader" id="loader"></div>
-                <span id="btnText">Send Now</span>
-                <span style="font-size: 18px;">➔</span>
-            </button>
-        </footer>
+        <div class="auth-card" id="changePwCard" style="display:none;">
+            <div class="auth-logo">🔐</div>
+            <h2>Change Credentials</h2>
+            <p>Update your portal access username and passcode</p>
+            <input type="password" id="oldPasscode" placeholder="Old Passcode" maxlength="10">
+            <input type="text" id="newUsername" placeholder="New Username" 
+                onkeydown="if(event.key==='Enter') document.getElementById('newPasscode').focus()">
+            <input type="password" id="newPasscode" placeholder="New Passcode (min 5)" maxlength="10">
+            <input type="password" id="confirmPasscode" placeholder="Confirm New" maxlength="10">
+            <button class="btn-login" onclick="changePasscode()">UPDATE CREDENTIALS</button>
+            <p id="pwError" style="color:#ef4444; font-size:13px; margin-top:12px; display:none;"></p>
+            <div style="margin-top:20px;">
+                <a href="#" onclick="togglePasswordChange(false)" style="color:var(--text-muted); font-size:13px; text-decoration:none;">Cancel & Back to Login</a>
+            </div>
+        </div>
     </div>
 
-    <div id="toast" class="status-toast"></div>
+    <!-- PORTAL PAGE -->
+    <div id="portalPage" style="display:none; flex-direction:column; align-items:center; width:100%; min-height:100vh;">
+        <nav>
+            <span class="nav-brand">HR Recruitment Portal</span>
+            <img src="logo.png" alt="Natco Pharma" onerror="this.style.display='none'">
+        </nav>
+
+        <div class="portal-body">
+            <div class="welcome-text">
+                <h1>Welcome, HR Associate </h1>
+            </div>
+
+            <div class="portal-buttons">
+                <a class="portal-btn" href="hr-onboarding.html" onclick="guardNav(event, 'hr-onboarding.html')">
+                    <div class="icon">📧</div>
+                    <div class="btn-text">
+                        <h3>Initiate Onboarding Application</h3>
+                        <p>Prepare and send candidate registration links via email</p>
+                    </div>
+                    <div class="arrow">›</div>
+                </a>
+
+                <a class="portal-btn" href="hr-responses.html" onclick="guardNav(event, 'hr-responses.html')">
+                    <div class="icon">📊</div>
+                    <div class="btn-text">
+                        <h3>Candidate Responses</h3>
+                        <p>Submission status and view filled applications</p>
+                    </div>
+                    <div class="arrow">›</div>
+                </a>
+
+                <a class="portal-btn" href="hr-verification.html" onclick="guardNav(event, 'hr-verification.html')">
+                    <div class="icon">🛡️</div>
+                    <div class="btn-text">
+                        <h3>Verification</h3>
+                        <p>CTC audit, candidate review, and PDF report generation</p>
+                    </div>
+                    <div class="arrow">›</div>
+                </a>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">🔓 Sign Out</button>
+        </div>
+    </div>
 
     <script>
-        function sendForm() {
-            const btn = document.getElementById('sendBtn');
-            const loader = document.getElementById('loader');
-            const btnText = document.getElementById('btnText');
-            const toast = document.getElementById('toast');
+        function checkAuth() {
+            if (sessionStorage.getItem('hr_authed') === 'true') {
+                showPortal();
+            }
+        }
 
-            const data = {
-                agreementName: document.getElementById('agreementName').value,
-                message: document.getElementById('message').value,
-                formLink: document.getElementById('formLink').value,
-                candidateEmail: document.getElementById('candidateEmail').value,
-                hrEmail: document.getElementById('hrEmail').value,
-                ccEmails: document.getElementById('ccEmails').value
-            };
+        function getExpectedUsername() {
+            return localStorage.getItem('hr_username_custom') || 'admin';
+        }
 
-            if (!data.candidateEmail || !data.candidateEmail.includes('@')) {
-                showToast("Please enter a valid candidate email.", "#ef4444");
+        function getExpectedPasscode() {
+            return localStorage.getItem('hr_passcode_custom') || 'NATCO123';
+        }
+
+        function verifyHR() {
+            const user = document.getElementById('hrUsername').value.trim().toLowerCase();
+            const pin = document.getElementById('hrPasscode').value;
+            const expUser = getExpectedUsername().toLowerCase();
+
+            if (user === expUser && pin === getExpectedPasscode()) {
+                sessionStorage.setItem('hr_authed', 'true');
+                showPortal();
+            } else {
+                const err = document.getElementById('authError');
+                err.innerText = '❌ Incorrect Username or Passcode.';
+                err.style.display = 'block';
+                document.getElementById('hrPasscode').value = '';
+                document.getElementById('hrPasscode').focus();
+            }
+        }
+
+        function togglePasswordChange(show) {
+            document.getElementById('loginCard').style.display = show ? 'none' : 'block';
+            document.getElementById('changePwCard').style.display = show ? 'block' : 'none';
+            document.getElementById('pwError').style.display = 'none';
+            document.getElementById('oldPasscode').value = '';
+            document.getElementById('newUsername').value = '';
+            document.getElementById('newPasscode').value = '';
+            document.getElementById('confirmPasscode').value = '';
+        }
+
+        function changePasscode() {
+            const oldP = document.getElementById('oldPasscode').value;
+            const newU = document.getElementById('newUsername').value.trim();
+            const newP = document.getElementById('newPasscode').value;
+            const confP = document.getElementById('confirmPasscode').value;
+            const err = document.getElementById('pwError');
+
+            if (oldP !== getExpectedPasscode()) {
+                err.innerText = "❌ Old passcode is incorrect.";
+                err.style.display = "block";
+                return;
+            }
+            if (newU.length < 3) {
+                err.innerText = "❌ New username must be at least 3 characters.";
+                err.style.display = "block";
+                return;
+            }
+            if (newP.length < 5) {
+                err.innerText = "❌ New passcode must be at least 5 characters.";
+                err.style.display = "block";
+                return;
+            }
+            if (newP !== confP) {
+                err.innerText = "❌ New passcodes do not match.";
+                err.style.display = "block";
                 return;
             }
 
-            // UI Loading state
-            btn.disabled = true;
-            loader.style.display = "block";
-            btnText.innerText = "Processing...";
-
-            fetch("/api/send-form", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            })
-                .then(async res => {
-                    const text = await res.text();
-                    if (res.ok) {
-                        showToast("Agreement sent successfully!", "#10b981");
-                    } else {
-                        showToast("Error: " + text, "#ef4444");
-                    }
-                })
-                .catch(err => {
-                    showToast("Network error occurred.", "#ef4444");
-                })
-                .finally(() => {
-                    btn.disabled = false;
-                    loader.style.display = "none";
-                    btnText.innerText = "Send Now";
-                });
+            localStorage.setItem('hr_username_custom', newU);
+            localStorage.setItem('hr_passcode_custom', newP);
+            alert("✅ Credentials updated successfully! Please login with your new credentials.");
+            togglePasswordChange(false);
         }
 
-        function showToast(msg, bg) {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.style.background = bg;
-            toast.style.display = "block";
-            setTimeout(() => {
-                toast.style.display = "none";
-            }, 4000);
+        function showPortal() {
+            document.getElementById('authOverlay').style.display = 'none';
+            document.getElementById('portalPage').style.display = 'flex';
         }
+
+        function guardNav(e, page) {
+            e.preventDefault();
+            if (sessionStorage.getItem('hr_authed') === 'true') {
+                window.location.href = page;
+            } else {
+                sessionStorage.removeItem('hr_authed');
+                window.location.href = 'hr-dashboard.html';
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('hr_authed');
+            location.reload();
+        }
+
+        checkAuth();
     </script>
 </body>
-
 </html>
