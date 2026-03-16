@@ -19,6 +19,7 @@ public class Candidate {
     private String email;
     private String phone;
     private String alternateMobile;
+    private String presentAddress;
     private String gender;
     private String state;
     private String placeOfBirth;
@@ -26,6 +27,7 @@ public class Candidate {
     private String nationality;
     private String fatherName;
     private String motherName;
+    private String husbandName;
     private String maritalStatus;
     private LocalDate marriageDate;
     private Integer childrenCount;
@@ -91,7 +93,12 @@ public class Candidate {
     private Double annualTotal;
 
     @Lob
+    @Column(columnDefinition = "VARCHAR(MAX)")
     private String signatureBase64;
+
+    @Lob
+    @Column(columnDefinition = "VARCHAR(MAX)")
+    private String photoBase64;
 
     private String declaration;
     private LocalDate declDate;
@@ -136,6 +143,11 @@ public class Candidate {
     @Column(length = 1000)
     private String activityHobbies;
     private String motherTongue;
+    
+    // Vehicle Info
+    private String ownVehicle;
+    private String vehicleType;
+    private String vehicleRegNo;
 
     private String uan;
     private String companyName;
@@ -215,6 +227,14 @@ public class Candidate {
         this.alternateMobile = alternateMobile;
     }
 
+    public String getPresentAddress() {
+        return presentAddress;
+    }
+
+    public void setPresentAddress(String presentAddress) {
+        this.presentAddress = presentAddress;
+    }
+
     public String getGender() {
         return gender;
     }
@@ -263,13 +283,11 @@ public class Candidate {
         this.fatherName = fatherName;
     }
 
-    public String getMotherName() {
-        return motherName;
-    }
+    public String getMotherName() { return motherName; }
+    public void setMotherName(String motherName) { this.motherName = motherName; }
 
-    public void setMotherName(String motherName) {
-        this.motherName = motherName;
-    }
+    public String getHusbandName() { return husbandName; }
+    public void setHusbandName(String husbandName) { this.husbandName = husbandName; }
 
     public String getMaritalStatus() {
         return maritalStatus;
@@ -653,6 +671,14 @@ public class Candidate {
         this.signatureBase64 = signatureBase64;
     }
 
+    public String getPhotoBase64() {
+        return photoBase64;
+    }
+
+    public void setPhotoBase64(String photoBase64) {
+        this.photoBase64 = photoBase64;
+    }
+
     public String getDeclaration() {
         return declaration;
     }
@@ -1024,4 +1050,11 @@ public class Candidate {
     public void setObjectionToRefer(String objectionToRefer) {
         this.objectionToRefer = objectionToRefer;
     }
+
+    public String getOwnVehicle() { return ownVehicle; }
+    public void setOwnVehicle(String ownVehicle) { this.ownVehicle = ownVehicle; }
+    public String getVehicleType() { return vehicleType; }
+    public void setVehicleType(String vehicleType) { this.vehicleType = vehicleType; }
+    public String getVehicleRegNo() { return vehicleRegNo; }
+    public void setVehicleRegNo(String vehicleRegNo) { this.vehicleRegNo = vehicleRegNo; }
 }

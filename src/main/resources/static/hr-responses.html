@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,97 +8,281 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary:#1c486e; --primary-light:#2c5e8c; --secondary:#10b981;
-            --bg:#f0f4f8; --border:#e2e8f0; --text-muted:#64748b;
+            --primary: #1c486e;
+            --primary-light: #2c5e8c;
+            --secondary: #10b981;
+            --bg: #f0f4f8;
+            --border: #e2e8f0;
+            --text-muted: #64748b;
         }
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Outfit',sans-serif; }
-        body { background:var(--bg); color:#1e293b; padding-top:85px; min-height:100vh; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: #1e293b;
+            padding-top: 85px;
+            min-height: 100vh;
+        }
 
         nav {
-            position:fixed; top:0; left:0; right:0; height:70px;
-            background:var(--primary); display:flex; align-items:center;
-            padding:0 35px; justify-content:space-between; z-index:100;
-            box-shadow:0 4px 12px rgba(28,72,110,0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            padding: 0 35px;
+            justify-content: space-between;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(28, 72, 110, 0.3);
         }
-        .nav-left { display:flex; align-items:center; gap:15px; }
-        .back-btn {
-            color:white; text-decoration:none; font-size:14px; font-weight:600;
-            background:rgba(255,255,255,0.15); padding:7px 16px;
-            border-radius:20px; transition:background 0.2s;
-        }
-        .back-btn:hover { background:rgba(255,255,255,0.25); }
-        .page-title { color:white; font-size:18px; font-weight:700; }
-        nav img { height:45px; filter:brightness(0) invert(1); opacity:0.85; }
 
-        .container { max-width:1100px; margin:0 auto; padding:40px 20px; }
-        .page-header { margin-bottom:30px; display:flex; justify-content:space-between; align-items:flex-end; }
-        .page-header h1 { font-size:28px; font-weight:900; color:var(--primary); }
-        .page-header p { color:var(--text-muted); margin-top:5px; }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 7px 16px;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .page-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        nav img {
+            height: 60px;
+            background: white;
+            padding: 2px 6px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
 
         .refresh-btn {
-            background:var(--primary); color:white; border:none; padding:10px 22px;
-            border-radius:12px; font-size:13px; font-weight:700; cursor:pointer;
-            font-family:'Outfit',sans-serif; transition:all 0.2s;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s;
         }
-        .refresh-btn:hover { background:var(--primary-light); }
 
-        .stats-row { display:flex; gap:20px; margin-bottom:25px; flex-wrap:wrap; }
-        .stat-card {
-            flex:1; min-width:150px; background:white; border-radius:18px;
-            padding:20px 25px; border:1px solid var(--border);
-            box-shadow:0 4px 10px rgba(0,0,0,0.04);
+        .refresh-btn:hover {
+            background: var(--primary-light);
         }
-        .stat-card .stat-num { font-size:32px; font-weight:900; color:var(--primary); }
-        .stat-card .stat-label { font-size:12px; color:var(--text-muted); margin-top:3px; text-transform:uppercase; font-weight:600; }
+
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background: white;
+            border-radius: 18px;
+            padding: 20px 25px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-card .stat-num {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .stat-card .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
 
         .card {
-            background:white; border-radius:24px; padding:30px;
-            border:1px solid var(--border); box-shadow:0 4px 15px rgba(0,0,0,0.05);
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
-        table { width:100%; border-collapse:collapse; }
-        thead th {
-            text-align:left; padding:12px 15px; font-size:11px; text-transform:uppercase;
-            letter-spacing:0.7px; color:var(--text-muted); border-bottom:2px solid var(--border);
-            font-weight:700;
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        tbody tr { transition:background 0.15s; }
-        tbody tr:hover { background:#f8fafc; }
-        tbody td { padding:16px 15px; border-bottom:1px solid var(--border); font-size:14px; vertical-align:middle; }
-        tbody tr:last-child td { border-bottom:none; }
+
+        thead th {
+            text-align: left;
+            padding: 12px 15px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border);
+            font-weight: 700;
+        }
+
+        tbody tr {
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody td {
+            padding: 16px 15px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
 
         .pill {
-            padding:4px 12px; border-radius:20px; font-size:11px; font-weight:700;
-            display:inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
         }
-        .pill-success { background:#dcfce7; color:#166534; }
-        .pill-pending { background:#fef9c3; color:#854d0e; }
 
-        .name-cell strong { display:block; font-size:15px; }
-        .name-cell span { font-size:12px; color:var(--text-muted); }
+        .pill-success {
+            background: #dcfce7;
+            color: #166534;
+        }
 
-        .empty-state { text-align:center; padding:60px 20px; color:var(--text-muted); }
-        .empty-state .e-icon { font-size:48px; margin-bottom:15px; }
-        .empty-state p { font-size:15px; }
+        .pill-pending {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .name-cell strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .name-cell span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state .e-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 15px;
+        }
 
         .view-btn {
-            background:var(--primary); color:white; border:none; padding:7px 16px;
-            border-radius:8px; font-size:12px; font-weight:700; cursor:pointer;
-            font-family:'Outfit',sans-serif; text-decoration:none; display:inline-block;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            text-decoration: none;
+            display: inline-block;
         }
-        .view-btn:hover { background:var(--primary-light); }
 
-        .loading { text-align:center; padding:40px; color:var(--text-muted); font-size:14px; }
+        .view-btn:hover {
+            background: var(--primary-light);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
     </style>
 </head>
+
 <body>
     <nav>
         <div class="nav-left">
             <a class="back-btn" href="hr-dashboard.html">← Portal</a>
             <span class="page-title">📊 Candidate Responses</span>
         </div>
-        <img src="logo.png" alt="Natco Pharma" onerror="this.style.display='none'">
+        <div id="hrWelcomeDisplay" style="color: white; font-weight: 600; font-size: 14px; opacity: 0.9; margin-left: auto; margin-right: 20px;"></div>
+        <img src="logo.jpg" alt="Natco Pharma" onerror="this.style.display='none'">
     </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hrName = sessionStorage.getItem('hr_name');
+            if (hrName) {
+                document.getElementById('hrWelcomeDisplay').innerText = `Welcome, ${hrName}`;
+            }
+        });
+    </script>
 
     <div class="container">
         <div class="page-header">
@@ -135,7 +320,11 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr><td colspan="5"><div class="loading">Loading candidates...</div></td></tr>
+                    <tr>
+                        <td colspan="5">
+                            <div class="loading">Loading candidates...</div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -151,22 +340,22 @@
             const body = document.getElementById('tableBody');
             body.innerHTML = '<tr><td colspan="5"><div class="loading">Loading...</div></td></tr>';
             try {
-                const res  = await fetch('/api/candidates');
+                const res = await fetch('/api/candidates');
                 const list = await res.json();
 
                 if (!Array.isArray(list) || list.length === 0) {
-                    document.getElementById('statTotal').innerText    = '0';
+                    document.getElementById('statTotal').innerText = '0';
                     document.getElementById('statVerified').innerText = '0';
-                    document.getElementById('statPending').innerText  = '0';
+                    document.getElementById('statPending').innerText = '0';
                     body.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="e-icon">📭</div><p>No candidate responses yet.</p></div></td></tr>`;
                     return;
                 }
 
-                const total    = list.length;
+                const total = list.length;
                 const verified = list.filter(c => c.ctcReviewDone).length;
-                document.getElementById('statTotal').innerText    = total;
+                document.getElementById('statTotal').innerText = total;
                 document.getElementById('statVerified').innerText = verified;
-                document.getElementById('statPending').innerText  = total - verified;
+                document.getElementById('statPending').innerText = total - verified;
 
                 body.innerHTML = list.map((c, i) => `
                     <tr>
@@ -190,4 +379,5 @@
         loadCandidates();
     </script>
 </body>
+
 </html>

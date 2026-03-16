@@ -23,6 +23,7 @@ public class CandidateResponseDTO {
     private String nationality;
     private String fatherName;
     private String motherName;
+    private String husbandName;
     private String maritalStatus;
     private LocalDate marriageDate;
     private Integer childrenCount;
@@ -119,6 +120,9 @@ public class CandidateResponseDTO {
     private Double totalC;
     private String otherPerquisites;
 
+    private String ownVehicle;
+    private String vehicleType;
+    private String vehicleRegNo;
     private String objectionToRefer;
 
     // Interview
@@ -258,6 +262,9 @@ public class CandidateResponseDTO {
     public void setMotherName(String motherName) {
         this.motherName = motherName;
     }
+
+    public String getHusbandName() { return husbandName; }
+    public void setHusbandName(String husbandName) { this.husbandName = husbandName; }
 
     public String getMaritalStatus() {
         return maritalStatus;
@@ -978,4 +985,11 @@ public class CandidateResponseDTO {
     public void setInterviewPost(String interviewPost) {
         this.interviewPost = interviewPost;
     }
+
+    public String getOwnVehicle() { return ownVehicle; }
+    public void setOwnVehicle(String ownVehicle) { this.ownVehicle = ownVehicle; }
+    public String getVehicleType() { return vehicleType; }
+    public void setVehicleType(String vehicleType) { this.vehicleType = vehicleType; }
+    public String getVehicleRegNo() { return vehicleRegNo; }
+    public void setVehicleRegNo(String vehicleRegNo) { this.vehicleRegNo = vehicleRegNo; }
 }

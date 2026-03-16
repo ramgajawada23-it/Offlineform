@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
@@ -50,8 +51,8 @@ public class CandidateMailController {
             org.springframework.mail.javamail.MimeMessageHelper helper = new org.springframework.mail.javamail.MimeMessageHelper(
                     mimeMessage, true, "UTF-8");
 
-            helper.setTo(candidateEmail);
-            helper.setSubject(agreementName);
+            helper.setTo(Objects.requireNonNull(candidateEmail));
+            helper.setSubject(Objects.requireNonNull(agreementName));
 
             if (ccEmails != null && !ccEmails.trim().isEmpty()) {
                 String[] ccArray = ccEmails.split(",");

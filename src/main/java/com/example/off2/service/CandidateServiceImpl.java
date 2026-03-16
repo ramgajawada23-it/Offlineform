@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Service
 public class CandidateServiceImpl implements CandidateService {
@@ -77,7 +78,7 @@ public class CandidateServiceImpl implements CandidateService {
     private void sendHrNotification(String hrEmail, Candidate c) throws Exception {
         jakarta.mail.internet.MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        helper.setTo(hrEmail);
+        helper.setTo(Objects.requireNonNull(hrEmail));
         helper.setSubject("✅ Form Submitted – " + c.getFullName());
 
         String reviewUrl = baseUrl + "/hr-dashboard.html";
@@ -126,7 +127,7 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public Candidate updateCandidateCtc(Long id, Candidate ctcData) {
-        Candidate candidate = repository.findById(id)
+        Candidate candidate = repository.findById(Objects.requireNonNull(id))
                 .orElseThrow(() -> new RuntimeException("Candidate not found: " + id));
 
         // Only update CTC fields — never overwrite candidate's own data
@@ -143,7 +144,7 @@ public class CandidateServiceImpl implements CandidateService {
         if (ctcData.getCtcReviewDone() != null)
             candidate.setCtcReviewDone(ctcData.getCtcReviewDone());
 
-        return repository.save(candidate);
+        return repository.save(Objects.requireNonNull(candidate));
     }
 
     @Override
@@ -168,6 +169,7 @@ public class CandidateServiceImpl implements CandidateService {
         dto.setNationality(c.getNationality());
         dto.setFatherName(c.getFatherName());
         dto.setMotherName(c.getMotherName());
+        dto.setHusbandName(c.getHusbandName());
         dto.setMaritalStatus(c.getMaritalStatus());
         dto.setMarriageDate(c.getMarriageDate());
         dto.setChildrenCount(c.getChildrenCount());
@@ -273,6 +275,10 @@ public class CandidateServiceImpl implements CandidateService {
         dto.setTotalB(c.getTotalB());
         dto.setTotalC(c.getTotalC());
         dto.setOtherPerquisites(c.getOtherPerquisites());
+        
+        dto.setOwnVehicle(c.getOwnVehicle());
+        dto.setVehicleType(c.getVehicleType());
+        dto.setVehicleRegNo(c.getVehicleRegNo());
 
         dto.setObjectionToRefer(c.getObjectionToRefer());
 

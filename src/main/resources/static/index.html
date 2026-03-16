@@ -17,7 +17,7 @@
       <span class="app-title">Candidate Registration Form</span>
     </div>
     <div class="nav-right">
-      <img src="logo.png" alt="Natco Pharma Logo" class="nav-logo">
+      <img src="logo.jpg" alt="Natco Pharma Logo" class="nav-logo">
     </div>
   </nav>
 
@@ -42,6 +42,9 @@
         <!-- Hidden signature fields -->
         <input type="file" id="signatureFile" style="display: none;" accept=".png,.jpg,.jpeg">
         <input type="hidden" id="signatureBase64" name="signatureBase64">
+
+        <!-- Hidden photo base64 field -->
+        <input type="hidden" id="photoBase64" name="photoBase64">
 
         <!-- STEP PROGRESS BAR -->
         <div class="stepper">
@@ -87,39 +90,91 @@
             </div>
           </div>
 
-          <!-- Gender -->
-          <div class="gender-group">
-            <label class="group-label">Gender</label>
-            <div class="radio-inline">
-              <label>
-                <input type="radio" name="gender" value="Male">
-                Male
-              </label>
+          <!-- Gender & Photo -->
+          <div class="grid-2" style="align-items: flex-start;">
+            <div class="gender-group">
+              <label class="group-label">Gender</label>
+              <div class="radio-inline" style="min-height: 42px;">
+                <label>
+                  <input type="radio" name="gender" value="Male">
+                  Male
+                </label>
 
-              <label>
-                <input type="radio" name="gender" value="Female">
-                Female
-              </label>
+                <label>
+                  <input type="radio" name="gender" value="Female">
+                  Female
+                </label>
+
+                <label>
+                  <input type="radio" name="gender" value="Others">
+                  Others
+                </label>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="group-label">Upload Photo</label>
+              <div style="display: flex; gap: 20px; align-items: center;">
+                <div style="width: 130px; height: 160px; border: 2px dashed #47749b; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #fdfdfd; overflow: hidden; position: relative; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+                   <img id="photoPreview" src="" alt="Photo Preview" style="display: none; width: 100%; height: 100%; object-fit: contain; background: #fff;">
+                   <div id="photoPlaceholder" style="color: #47749b; font-size: 11px; text-align: center; padding: 10px; font-weight: 500;">
+                      <div style="font-size: 24px; margin-bottom: 5px;">📷</div>
+                      Passport Size<br>Photo
+                   </div>
+                </div>
+                <div style="flex: 1;">
+                  <p style="font-size: 12px; color: #666; margin-bottom: 8px;">Accepted formats: JPG, PNG (Max 2MB)</p>
+                  <input type="file" id="candidatePhoto" name="candidatePhoto" accept="image/*" class="custom-file-input">
+                </div>
+              </div>
             </div>
           </div>
-
 
 
           <!-- Personal Info -->
           <div class="grid-3">
             <div class="form-field">
+              <label>State</label>
               <select id="state" name="state">
                 <option value="">Select State</option>
-                <option value="Telangana">Telangana</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
                 <option value="Kerala">Kerala</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
               </select>
             </div>
 
             <div class="form-field">
+              <label>Religion</label>
               <input placeholder="Religion" id="religion" name="religion">
             </div>
 
             <div class="form-field">
+              <label>Nationality</label>
               <input placeholder="Nationality" id="nationality" name="nationality">
             </div>
           </div>
@@ -127,42 +182,74 @@
 
           <div class="grid-2">
             <div class="form-field">
+              <label>Father's Name</label>
               <input placeholder="Father's Name" id="fatherName" name="fatherName">
             </div>
             <div class="form-field">
+              <label>Mother's Name</label>
               <input placeholder="Mother's Name" id="motherName" name="motherName">
             </div>
           </div>
 
-          <!-- Marriage -->
-          <div class="grid-3">
-            <div class="form-field">
-              <select id="maritalStatus" name="maritalStatus">
-                <option value="">MaritalStatus</option>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <input type="date" id="marriageDate" name="marriageDate">
-            </div>
-
-            <div class="form-field">
-              <input type="number" id="childrenCount" placeholder="No. of Children" name="childrenCount">
+          <div id="husbandContainer" style="display: none; margin-bottom: 15px;">
+            <div class="grid-2">
+              <div class="form-field">
+                <label>Husband's Name <span class="req-star" style="color: red; display: none;">*</span></label>
+                <input placeholder="Husband's Name" id="husbandName" name="husbandName">
+              </div>
             </div>
           </div>
 
-          <!-- Address -->
+          <div class="grid-3">
+            <div class="form-field">
+              <label>Marital Status</label>
+              <select id="maritalStatus" name="maritalStatus">
+                <option value="">MaritalStatus</option>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Spinster">Spinster</option>
+                <option value="Married">Married</option>
+                <option value="Separated">Separated</option>
+              </select>
+            </div>
+
+            <!-- Marriage Details (Conditional) -->
+            <div id="marriageDetails" style="display: none;">
+              <div class="form-field">
+                <label>Marriage Date</label>
+                <input type="date" id="marriageDate" name="marriageDate">
+              </div>
+
+              <div class="form-field">
+                <label>No. of Children</label>
+                <input type="number" id="childrenCount" placeholder="0-5" name="childrenCount" min="0" max="5">
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Section -->
           <h4>Contact & Address</h4>
 
           <div class="grid-2">
             <div class="form-field">
-              <input placeholder="Permanent Address" id="permanentAddress" name="permanentAddress">
+              <label>Present Address</label>
+              <textarea placeholder="Present Address (Required)" id="presentAddress" name="presentAddress" required maxlength="200" rows="2" style="width: 100%; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: none;"></textarea>
             </div>
-
             <div class="form-field">
-              <input type="tel" placeholder="Permanent Mobile Number" id="mobile1" class="mobile-input" maxlength="10"
-                inputmode="numeric" name="permanentMobile" readonly>
+              <label>Permanent Address</label>
+              <textarea placeholder="Permanent Address (Required)" id="permanentAddress" name="permanentAddress" required maxlength="200" rows="2" style="width: 100%; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: none;"></textarea>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-field">
+              <label>Mobile Number</label>
+              <input type="tel" placeholder="Mobile Number" id="mobile1" class="mobile-input" maxlength="10"
+                inputmode="numeric" name="phone" readonly style="background-color: #f9f9f9; cursor: not-allowed;">
+            </div>
+            <div class="form-field">
+              <label>Alternate Mobile Number</label>
+              <input type="tel" placeholder="Alternate Mobile Number" id="mobile2_alt" class="mobile-input" maxlength="10"
+                inputmode="numeric" name="alternateMobile">
             </div>
           </div>
 
@@ -171,24 +258,30 @@
           <h4>Physical Details</h4>
           <div class="grid-3">
             <div class="form-field">
+              <label>Height (ft'in)</label>
               <input placeholder="Height (Feet'inches)" id="heightFeet" name="heightFeet">
             </div>
             <div class="form-field">
+              <label>Weight (kg)</label>
               <input placeholder="Weight (kg)" id="weight" name="weight">
             </div>
-          </div>
-
-          <div class="grid-2">
             <div class="form-field">
+              <label>Identification Marks</label>
               <input placeholder="Identification Marks" id="identification" name="identificationMarks">
-            </div>
-            <div class="form-field">
-              <input placeholder="Eyesight" id="eyesight" name="eyesight">
             </div>
           </div>
 
           <div class="grid-3">
             <div class="form-field">
+              <label>Eyesight</label>
+              <select id="eyesight" name="eyesight">
+                <option value="">Select Eyesight</option>
+                <option value="Normal">Normal</option>
+                <option value="Corrected">Corrected</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Blood Group</label>
               <select id="bloodGroup" name="bloodGroup">
                 <option value="">Select Blood Group</option>
                 <option>A+</option>
@@ -202,13 +295,18 @@
               </select>
             </div>
             <div class="form-field">
+              <label>Physical Disability</label>
               <select id="disability" name="disability">
                 <option value="">Select Physical Disability</option>
                 <option>No Disability</option>
                 <option>Yes</option>
               </select>
             </div>
-            <div class="form-field">
+          </div>
+
+          <div class="grid-3">
+             <div class="form-field">
+              <label>Prolonged Illness</label>
               <select id="illness" name="illness">
                 <option value="">select illness</option>
                 <option>No Prolonged Illness</option>
@@ -217,15 +315,19 @@
             </div>
           </div>
 
-          <div class="grid-2">
-            <div class="illness-fields">
-              <input placeholder="Illness Name" id="illnessName" name="illnessName">
-            </div>
+          <!-- Illness Details (Conditional) -->
+          <div id="illnessDetails" style="display: none;">
+            <div class="grid-2">
+              <div class="illness-fields">
+                <label>Illness Name</label>
+                <input placeholder="Illness Name" id="illnessName" name="illnessName">
+              </div>
 
-            <div class="illness-fields">
-              <input placeholder="Illness Duration" id="illnessDuration" name="illnessDuration">
+              <div class="illness-fields">
+                <label>Illness Duration</label>
+                <input placeholder="Illness Duration" id="illnessDuration" name="illnessDuration">
+              </div>
             </div>
-
           </div>
 
           <!-- KYC Details -->
@@ -233,34 +335,40 @@
 
           <div class="grid-3">
             <div class="form-field">
+              <label>PAN Number</label>
               <!-- Real value stored here -->
               <input type="hidden" id="pan" name="pan">
               <!-- Masked UI input -->
-              <input type="text" id="panDisplay" placeholder="PAN Number">
+              <input type="text" id="panDisplay" placeholder="PAN Number" maxlength="10">
             </div>
 
             <div class="form-field">
+              <label>Aadhaar Number</label>
               <input type="hidden" id="aadhaar" name="aadhaar">
-              <input type="text" id="aadhaarDisplay" placeholder="Aadhaar Number">
+              <input type="text" id="aadhaarDisplay" placeholder="12 Digit Aadhaar Number" maxlength="12" inputmode="numeric">
             </div>
 
           </div>
 
-          <div class="grid-3">
+          <div class="grid-2">
             <div class="form-field">
+              <label>Bank Name</label>
               <input type="text" placeholder="Bank Name" id="bankName" name="bankName">
             </div>
             <div class="form-field">
+              <label>Account Number</label>
               <input type="hidden" id="bankAccount" name="bankAccount">
-              <input type="text" id="bankAccountDisplay" placeholder="Account Number">
+              <input type="text" id="bankAccountDisplay" placeholder="9-18 Digits Account Number" maxlength="18" inputmode="numeric">
             </div>
           </div>
 
-          <div class="grid-3">
+          <div class="grid-2">
             <div class="form-field">
+              <label>IFSC Code</label>
               <input placeholder="IFSC Code" id="ifsc" name="ifsc">
             </div>
             <div class="form-field">
+              <label>Branch Name</label>
               <input placeholder="Branch Name" id="branch" name="branch">
             </div>
           </div>
@@ -270,8 +378,9 @@
             <small class="error-text" style="display:none;"></small>
           </div>
           <div class="form-field">
+            <label>Mobile Number</label>
             <input type="tel" placeholder="Mobile Number" id="mobile2" class="mobile-input" maxlength="10"
-              inputmode="numeric" name="alternateMobile" readonly>
+              inputmode="numeric" readonly style="background-color: #f9f9f9; cursor: not-allowed;">
           </div>
         </section>
 
@@ -310,9 +419,9 @@
                         <option value="">Select</option>
                         <option value="Father">Father</option>
                         <option value="Mother">Mother</option>
-                        <option value="Brother">Brother</option>
-                        <option value="Sister">Sister</option>
                         <option value="Spouse">Spouse</option>
+                        <option value="Son">Son</option>
+                        <option value="Daughter">Daughter</option>
                       </select>
                     </div>
                   </td>
@@ -359,6 +468,31 @@
             <button type="button" onclick="addFamilyRow()">Add Row</button>
             <br><br>
           </div>
+
+          <!-- Vehicle Ownership -->
+          <div class="section-divider" style="border-top: 1px solid #e2e8f0; margin: 20px 0;"></div>
+          <div class="grid-3">
+            <div class="form-field">
+              <label>Do you own a vehicle?</label>
+              <select id="ownVehicle" name="ownVehicle">
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            
+            <div id="vehicleDetails" style="display: none;">
+              <div class="form-field">
+                <label>Type of Vehicle</label>
+                <input type="text" id="vehicleType" name="vehicleType" placeholder="e.g. 2 Wheeler, 4 Wheeler">
+              </div>
+              <div class="form-field">
+                <label>Reg. No</label>
+                <input type="text" id="vehicleRegNo" name="vehicleRegNo" placeholder="Vehicle Registration Number">
+              </div>
+            </div>
+          </div>
+          <br>
         </section>
 
         <!-- ================= STEP 3 ================= -->
@@ -597,10 +731,10 @@
               <textarea id="strengths" name="strengths" placeholder="List three of your major strengths "></textarea>
             </div>
             <div class="form-field">
-              <textarea id="Weaknesses" name="Weaknesses" placeholder="List your major weaknesses "></textarea>
+              <textarea id="weaknesses" name="Weaknesses" placeholder="List your major weaknesses "></textarea>
             </div>
             <div class="form-field">
-              <textarea id="Values" name="Values"
+              <textarea id="values" name="Values"
                 placeholder="Mention three things/ concepts/ practices/ ideas etc. that you value most in your life. "></textarea>
             </div>
           </div>

@@ -58,6 +58,14 @@ window.addEventListener("DOMContentLoaded", () => {
       showToast("Mobile pre-filled by HR", "online");
     }
   }
+
+  // Capture name and email if present
+  const nameParam = params.get("name");
+  const emailParam = params.get("email");
+  const hrEmailParam = params.get("hrEmail");
+  if (nameParam) sessionStorage.setItem("prefilledName", nameParam);
+  if (emailParam) sessionStorage.setItem("prefilledEmail", emailParam);
+  if (hrEmailParam) sessionStorage.setItem("prefilledHrEmail", hrEmailParam);
 });
 
 document.getElementById("loginForm").onsubmit = async (e) => {

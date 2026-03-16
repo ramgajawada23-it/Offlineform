@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,100 +8,279 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1c486e; --primary-light: #2c5e8c; --secondary: #10b981;
-            --bg: #f0f4f8; --border: #e2e8f0; --text-muted: #64748b;
+            --primary: #1c486e;
+            --primary-light: #2c5e8c;
+            --secondary: #10b981;
+            --bg: #f0f4f8;
+            --border: #e2e8f0;
+            --text-muted: #64748b;
         }
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Outfit',sans-serif; }
-        body { background: var(--bg); color: #1e293b; padding-top: 85px; min-height:100vh; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: #1e293b;
+            padding-top: 85px;
+            min-height: 100vh;
+        }
 
         nav {
-            position: fixed; top:0; left:0; right:0; height:70px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
             background: var(--primary);
-            display: flex; align-items: center; padding: 0 35px;
-            justify-content: space-between; z-index: 100;
-            box-shadow: 0 4px 12px rgba(28,72,110,0.3);
+            display: flex;
+            align-items: center;
+            padding: 0 35px;
+            justify-content: space-between;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(28, 72, 110, 0.3);
         }
-        .nav-left { display:flex; align-items:center; gap:15px; }
-        .back-btn {
-            color: white; text-decoration: none; font-size: 14px; font-weight:600;
-            background: rgba(255,255,255,0.15); padding: 7px 16px;
-            border-radius: 20px; transition: background 0.2s;
-        }
-        .back-btn:hover { background: rgba(255,255,255,0.25); }
-        .page-title { color: white; font-size: 18px; font-weight: 700; }
-        nav img { height: 45px; filter: brightness(0) invert(1); opacity:0.85; }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        .page-header { margin-bottom: 30px; }
-        .page-header h1 { font-size:28px; font-weight:900; color:var(--primary); }
-        .page-header p { color:var(--text-muted); margin-top:5px; }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 7px 16px;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .page-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        nav img {
+            height: 60px;
+            background: white;
+            padding: 2px 6px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
 
         .card {
-            background: white; border-radius: 24px; padding: 35px;
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        @media(max-width:700px){ .form-grid { grid-template-columns:1fr; } }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
 
-        .form-group { margin-bottom: 20px; }
-        label { font-size:12px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:7px; text-transform:uppercase; letter-spacing:0.5px; }
-        input, textarea, select {
-            width:100%; padding:13px 16px; border:2px solid var(--border);
-            border-radius:12px; font-size:14px; outline:none; font-family:'Outfit',sans-serif;
+        @media(max-width:700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            font-family: 'Outfit', sans-serif;
             transition: border-color 0.2s, box-shadow 0.2s;
             background: #fafafa;
         }
-        input:focus, textarea:focus { border-color:var(--primary); box-shadow:0 0 0 4px rgba(28,72,110,0.08); background:white; }
-        input[readonly] { background:#f1f5f9; color:var(--text-muted); cursor:default; }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(28, 72, 110, 0.08);
+            background: white;
+        }
+
+        input[readonly] {
+            background: #f1f5f9;
+            color: var(--text-muted);
+            cursor: default;
+        }
 
         .recipient-box {
-            background: #f8fafc; border: 2px solid var(--border);
-            border-radius: 16px; padding: 20px; margin-bottom: 20px;
+            background: #f8fafc;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
+
         .recipient-box .r-label {
-            font-size:11px; font-weight:800; color:var(--primary);
-            text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
         }
 
         .btn-send {
-            width:100%; padding:16px; background:var(--primary); color:white;
-            border:none; border-radius:14px; font-size:16px; font-weight:700;
-            cursor:pointer; font-family:'Outfit',sans-serif; letter-spacing:0.5px;
-            transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:10px;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        .btn-send:hover { background:var(--primary-light); transform:translateY(-2px); }
-        .btn-send:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+        .btn-send:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-send:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
 
         .loader {
-            width:18px; height:18px; border:3px solid rgba(255,255,255,0.3);
-            border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; display:none;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
         }
-        @keyframes spin { to { transform:rotate(360deg); } }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         .toast {
-            position:fixed; bottom:30px; right:30px; padding:15px 25px;
-            border-radius:14px; color:white; font-weight:600; font-size:14px;
-            display:none; z-index:9999; box-shadow:0 10px 30px rgba(0,0,0,0.2);
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            border-radius: 14px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            display: none;
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             animation: slideUp 0.3s ease;
         }
-        @keyframes slideUp { from { transform:translateY(20px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
         .section-label {
-            font-size: 15px; font-weight: 800; color: var(--primary);
-            margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border);
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
         }
     </style>
 </head>
+
 <body>
     <nav>
         <div class="nav-left">
             <a class="back-btn" href="hr-dashboard.html">← Portal</a>
             <span class="page-title">📧 Initiate Onboarding Application</span>
         </div>
-        <img src="logo.png" alt="Natco Pharma" onerror="this.style.display='none'">
+        <div id="hrWelcomeDisplay" style="color: white; font-weight: 600; font-size: 14px; opacity: 0.9; margin-left: auto; margin-right: 20px;"></div>
+        <img src="logo.jpg" alt="Natco Pharma" onerror="this.style.display='none'">
     </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hrName = sessionStorage.getItem('hr_name');
+            if (hrName) {
+                document.getElementById('hrWelcomeDisplay').innerText = `Welcome, ${hrName}`;
+            }
+        });
+    </script>
 
     <div class="container">
         <div class="page-header">
@@ -136,6 +316,10 @@
                     <div class="section-label">Recipient & CC Details</div>
                     <div class="recipient-box">
                         <div class="r-label">📨 Candidate (Primary Recipient)</div>
+                        <div class="form-group">
+                            <label>Candidate Full Name</label>
+                            <input type="text" id="candidateName" placeholder="Enter Full Name">
+                        </div>
                         <div class="form-group">
                             <label>Email Address</label>
                             <input type="email" id="candidateEmail" placeholder="candidate@example.com">
@@ -179,17 +363,18 @@
             const btn = document.getElementById('sendBtn');
             const data = {
                 agreementName: document.getElementById('agreementName').value.trim(),
-                message:       document.getElementById('message').value.trim(),
-                formLink:      document.getElementById('formLink').value.trim(),
-                candidateEmail:document.getElementById('candidateEmail').value.trim(),
-                candidateMobile:document.getElementById('candidateMobile').value.trim(),
-                hrEmail:       document.getElementById('hrEmail').value.trim(),
-                ccEmails:      document.getElementById('ccEmails').value.trim()
+                message: document.getElementById('message').value.trim(),
+                formLink: document.getElementById('formLink').value.trim(),
+                candidateName: document.getElementById('candidateName').value.trim(),
+                candidateEmail: document.getElementById('candidateEmail').value.trim(),
+                candidateMobile: document.getElementById('candidateMobile').value.trim(),
+                hrEmail: document.getElementById('hrEmail').value.trim(),
+                ccEmails: document.getElementById('ccEmails').value.trim()
             };
             const deadline = document.getElementById('completionDeadline').value;
 
-            if (!data.candidateEmail || !data.candidateMobile || !deadline) {
-                showToast('Email, mobile and deadline are required.', '#ef4444');
+            if (!data.candidateName || !data.candidateEmail || !data.candidateMobile || !deadline) {
+                showToast('Name, email, mobile and deadline are required.', '#ef4444');
                 return;
             }
 
@@ -198,18 +383,24 @@
             document.getElementById('btnText').innerText = 'Sending...';
 
             try {
-                const sep  = data.formLink.includes('?') ? '&' : '?';
-                const link = `${data.formLink}${sep}mobile=${data.candidateMobile}&deadline=${deadline}`;
-                const res  = await fetch('/api/send-form', {
+                const sep = data.formLink.includes('?') ? '&' : '?';
+                // Encode parameters to handle spaces/special chars
+                const emailEnc = encodeURIComponent(data.candidateEmail);
+                const hrEmailEnc = encodeURIComponent(data.hrEmail);
+                const nameEnc = encodeURIComponent(data.candidateName);
+                const link = `${data.formLink}${sep}mobile=${data.candidateMobile}&deadline=${deadline}&name=${nameEnc}&email=${emailEnc}&hrEmail=${hrEmailEnc}`;
+                
+                const res = await fetch('/api/send-form', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ...data, formLink: link })
                 });
                 if (res.ok) {
                     showToast('✅ Application sent successfully!', '#10b981');
-                    document.getElementById('candidateEmail').value  = '';
+                    document.getElementById('candidateName').value = '';
+                    document.getElementById('candidateEmail').value = '';
                     document.getElementById('candidateMobile').value = '';
-                    document.getElementById('message').value         = '';
+                    document.getElementById('message').value = '';
                 } else {
                     showToast('❌ Failed to send. Please try again.', '#ef4444');
                 }
@@ -218,7 +409,7 @@
             } finally {
                 btn.disabled = false;
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('btnText').innerText    = '🚀 SEND Application';
+                document.getElementById('btnText').innerText = '🚀 SEND Application';
             }
         }
 
@@ -229,4 +420,5 @@
         }
     </script>
 </body>
+
 </html>

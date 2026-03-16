@@ -96,39 +96,97 @@ async function saveDraft(draft) {
 
 /* ---------- MARITAL STATUS TOGGLE ---------- */
 function toggleMaritalFields() {
-  const show = maritalStatus?.value === "Married";
+  const maritalStatusValue = document.getElementById("maritalStatus")?.value;
+  const detailsContainer = document.getElementById("marriageDetails");
+  const marriageDate = document.getElementById("marriageDate");
+  const childrenCount = document.getElementById("childrenCount");
 
-  if (marriageDate?.parentElement)
-    marriageDate.parentElement.style.display = show ? "block" : "none";
+  const show = maritalStatusValue === "Married" || maritalStatusValue === "Separated";
 
-  if (childrenCount?.parentElement)
-    childrenCount.parentElement.style.display = show ? "block" : "none";
+  if (detailsContainer) {
+    // We use "contents" so the children remain grid items
+    detailsContainer.style.display = show ? "contents" : "none";
+  }
 
   if (!show) {
-    marriageDate.value = "";
-    childrenCount.value = "";
-    clearError(marriageDate);
-    clearError(childrenCount);
+    if (marriageDate) marriageDate.value = "";
+    if (childrenCount) childrenCount.value = "";
+    if (typeof clearError === "function") {
+      if (marriageDate) clearError(marriageDate);
+      if (childrenCount) clearError(childrenCount);
+    }
+  }
+  toggleHusbandField();
+}
+
+function toggleHusbandField() {
+  const gender = document.querySelector("input[name='gender']:checked")?.value;
+  const marital = document.getElementById("maritalStatus")?.value;
+  const container = document.getElementById("husbandContainer");
+  const star = container?.querySelector(".req-star");
+  const field = document.getElementById("husbandName");
+
+  // Show if Female
+  const show = gender === "Female";
+  
+  if (container) {
+    container.style.display = show ? "block" : "none";
+  }
+
+  // Mandatory if Female AND (Married or Separated)
+  const isRequired = show && (marital === "Married" || marital === "Separated");
+  if (star) {
+    star.style.display = isRequired ? "inline" : "none";
+  }
+  
+  if (!show && field) {
+    field.value = "";
+    if (typeof clearError === "function") clearError(field);
   }
 }
 
 
 function toggleIllnessFields() {
   const prolongedIllness = document.getElementById("illness");
+  const detailsContainer = document.getElementById("illnessDetails");
   const illnessName = document.getElementById("illnessName");
   const illnessDuration = document.getElementById("illnessDuration");
 
   const show = prolongedIllness?.value === "Yes";
 
-  if (illnessName?.parentElement)
-    illnessName.parentElement.style.display = show ? "block" : "none";
-
-  if (illnessDuration?.parentElement)
-    illnessDuration.parentElement.style.display = show ? "block" : "none";
+  if (detailsContainer) {
+    detailsContainer.style.display = show ? "block" : "none";
+  }
 
   if (!show) {
     if (illnessName) illnessName.value = "";
     if (illnessDuration) illnessDuration.value = "";
+    if (typeof clearError === "function") {
+      if (illnessName) clearError(illnessName);
+      if (illnessDuration) clearError(illnessDuration);
+    }
+  }
+}
+
+function toggleVehicleFields() {
+  const ownVehicle = document.getElementById("ownVehicle");
+  const detailsContainer = document.getElementById("vehicleDetails");
+  const vehicleType = document.getElementById("vehicleType");
+  const vehicleRegNo = document.getElementById("vehicleRegNo");
+
+  const show = ownVehicle?.value === "Yes";
+
+  if (detailsContainer) {
+    detailsContainer.style.display = show ? "contents" : "none";
+  }
+
+  if (!show) {
+    if (vehicleType) vehicleType.value = "";
+    if (vehicleRegNo) vehicleRegNo.value = "";
+    if (typeof clearError === "function") {
+      if (vehicleType) clearError(vehicleType);
+      if (vehicleRegNo) clearError(vehicleRegNo);
+    }
   }
 }
 
@@ -172,7 +230,9 @@ async function restoreDraftState(data) {
     // 🔁 Recalculate derived / conditional fields
     recalculateAge();
     toggleIllnessFields();
+    toggleVehicleFields();
     toggleMaritalFields();
+    toggleHusbandField();
     toggleExperienceDependentSections();
     validateStep3Languages(true);
     syncMediclaimVisibility();
@@ -187,6 +247,17 @@ async function restoreDraftState(data) {
     // Restore signature previews
     if (data.fields?.signatureBase64) {
       updateSignaturePreviews(data.fields.signatureBase64);
+    }
+    
+    // Restore photo preview
+    if (data.fields?.photoBase64) {
+      const pPreview = document.getElementById("photoPreview");
+      const pPlaceholder = document.getElementById("photoPlaceholder");
+      if (pPreview) {
+        pPreview.src = data.fields.photoBase64;
+        pPreview.style.display = "block";
+        if (pPlaceholder) pPlaceholder.style.display = "none";
+      }
     }
 
     if (Array.isArray(data.educationRows)) {
@@ -270,8 +341,9 @@ function restoreLanguageRows(fields) {
     }
   });
 
-  // Only add extra rows if maxIndex >= current count
-  for (let i = existingRows; i <= maxIndex; i++) {
+  // Only add extra rows if maxIndex >= current count, up to 4 total
+  const limit = 4;
+  for (let i = existingRows; i <= maxIndex && i < limit; i++) {
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
@@ -550,6 +622,11 @@ window.addFamilyRow = () => {
 
   if (!tbody) return;
 
+  if (tbody.children.length >= 5) {
+    showToast("Maximum 5 family members allowed", "offline");
+    return;
+  }
+
   const index = tbody.children.length;
   const tr = document.createElement("tr");
   tr.innerHTML = `
@@ -563,8 +640,6 @@ window.addFamilyRow = () => {
           <option value="">Select</option>
           <option>Father</option>
           <option>Mother</option>
-          <option>Brother</option>
-          <option>Sister</option>
           <option>Spouse</option>
           <option>Son</option>
           <option>Daughter</option>
@@ -930,12 +1005,10 @@ function fillMediclaimFamilyDetails(sourceData = null) {
     let gender = "";
     switch (relationship) {
       case "Father":
-      case "Brother":
       case "Son":
         gender = "Male";
         break;
       case "Mother":
-      case "Sister":
       case "Daughter":
         gender = "Female";
         break;
@@ -944,6 +1017,7 @@ function fillMediclaimFamilyDetails(sourceData = null) {
           (sourceData ? sourceData.gender : "");
         if (candidateGender === "Male") gender = "Female";
         else if (candidateGender === "Female") gender = "Male";
+        else if (candidateGender === "Others") gender = "Others";
         break;
     }
 
@@ -1323,6 +1397,30 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Draft restore process failed:", err);
     } finally {
+      // 🚀 AUTO-FILL FROM HR LINK (If No Draft or explicitly NEW)
+      const preName = sessionStorage.getItem("prefilledName");
+      const preEmail = sessionStorage.getItem("prefilledEmail");
+
+      if (preName) {
+        const parts = preName.split(" ");
+        const firstNameEl = document.getElementById("firstName");
+        const lastNameEl = document.getElementById("lastName");
+        
+        if (firstNameEl && !firstNameEl.value) {
+          firstNameEl.value = parts[0] || "";
+        }
+        if (lastNameEl && !lastNameEl.value && parts.length > 1) {
+          lastNameEl.value = parts.slice(1).join(" ");
+        }
+      }
+
+      if (preEmail) {
+        const emailEl = document.getElementById("email");
+        if (emailEl && !emailEl.value) {
+          emailEl.value = preEmail;
+        }
+      }
+
       isRestoring = false; // Allow autosave now
       activateAutosave();
       console.log("Initialization complete. Autosave enabled.");
@@ -1542,6 +1640,7 @@ document.addEventListener("DOMContentLoaded", () => {
     radio.addEventListener("change", () => {
       const group = document.querySelector(".gender-group");
       clearError(group);
+      toggleHusbandField();
     });
   });
 
@@ -1550,6 +1649,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   addLanguageBtn?.addEventListener("click", () => {
     const index = languageTableBody.querySelectorAll("tr").length;
+    if (index >= 4) {
+      showToast("Maximum 4 languages allowed", "offline");
+      return;
+    }
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -1636,6 +1739,50 @@ document.addEventListener("DOMContentLoaded", () => {
   // But safety trigger:
   step6Box?.addEventListener("click", () => sigFileInput?.click());
 
+  /* ================= PHOTO UPLOAD LOGIC ================= */
+  const photoFileInput = document.getElementById("candidatePhoto");
+  const photoBase64Input = document.getElementById("photoBase64");
+  const photoPreview = document.getElementById("photoPreview");
+
+  photoFileInput?.addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    if (!file) {
+      if (photoPreview) {
+        photoPreview.style.display = "none";
+        photoPreview.src = "";
+        const pPlaceholder = document.getElementById("photoPlaceholder");
+        if (pPlaceholder) pPlaceholder.style.display = "block";
+      }
+      if (photoBase64Input) photoBase64Input.value = "";
+      return;
+    }
+
+    const validTypes = ["image/png", "image/jpeg", "image/jpg"];
+    if (!validTypes.includes(file.type)) {
+      showToast("Invalid format! Accepted: PNG, JPG, JPEG", "offline");
+      photoFileInput.value = "";
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      showToast("File too large! Max size: 2MB", "offline");
+      photoFileInput.value = "";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      if (photoBase64Input) photoBase64Input.value = e.target.result;
+      if (photoPreview) {
+        photoPreview.src = e.target.result;
+        photoPreview.style.display = "block";
+        const pPlaceholder = document.getElementById("photoPlaceholder");
+        if (pPlaceholder) pPlaceholder.style.display = "none";
+      }
+      debouncedSaveDraft();
+    };
+    reader.readAsDataURL(file);
+  });
 
   function activateAutosave() {
     if (autosaveActivated) return; // ✅ prevent duplicate binding
@@ -1868,9 +2015,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // On blur → mask if valid length (8-18 digits)
+  // On blur → mask if valid length (9-18 digits)
   bankAccInput?.addEventListener("blur", () => {
-    if (realBankAccount.length >= 8) {
+    if (realBankAccount.length >= 9) {
       bankAccInput.value = "XXXXXX" + realBankAccount.slice(-4);
     }
   });
@@ -1888,6 +2035,11 @@ document.addEventListener("DOMContentLoaded", () => {
   prolongedIllness = document.getElementById("illness");
   illnessName = document.getElementById("illnessName");
   illnessDuration = document.getElementById("illnessDuration");
+
+  childrenCount?.addEventListener("input", function() {
+    if (this.value > 5) this.value = 5;
+    if (this.value < 0) this.value = 0;
+  });
   const savedEmail =
     localStorage.getItem("email") || sessionStorage.getItem("email");
 
@@ -1895,10 +2047,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("email").value = savedEmail;
   }
 
-  document.getElementById("permanentAddress")?.addEventListener("input", e => {
-    if (e.target.value.length > 25) {
-      e.target.value = e.target.value.slice(0, 25);
-    }
+  ["presentAddress", "permanentAddress"].forEach(id => {
+    document.getElementById(id)?.addEventListener("input", e => {
+      // Character limit 150
+      if (e.target.value.length > 200) {
+        e.target.value = e.target.value.slice(0, 200);
+      }
+    });
   });
 
   /* ---------- DOB → AGE ---------- */
@@ -1927,6 +2082,10 @@ document.addEventListener("DOMContentLoaded", () => {
   maritalStatus?.addEventListener("change", toggleMaritalFields);
 
   prolongedIllness?.addEventListener("change", toggleIllnessFields);
+
+  const ownVehicle = document.getElementById("ownVehicle");
+  ownVehicle?.addEventListener("change", toggleVehicleFields);
+  toggleVehicleFields(); // Initial sync
 
   function syncMaskedKYC() {
     if (
@@ -2037,13 +2196,27 @@ document.addEventListener("DOMContentLoaded", () => {
       ok = false;
     }
 
-    if (maritalStatus?.value === "Married") {
+    const husband = step.querySelector("#husbandName");
+    const genderVal = document.querySelector("input[name='gender']:checked")?.value;
+    const isMarriedOrSeparated = maritalStatus?.value === "Married" || maritalStatus?.value === "Separated";
+    
+    if (genderVal === "Female" && isMarriedOrSeparated) {
+      if (husband && isBlank(husband.value)) {
+        showError(husband, "Husband's name required", silent);
+        ok = false;
+      } else if (husband && !isValidPersonName(husband.value)) {
+        showError(husband, "Valid husband's name required", silent);
+        ok = false;
+      }
+    }
+
+    if (maritalStatus?.value === "Married" || maritalStatus?.value === "Separated") {
       if (marriageDate && !marriageDate.value) {
         showError(marriageDate, "Marriage date required", silent);
         ok = false;
       }
-      if (childrenCount && (childrenCount.value === "" || +childrenCount.value < 0)) {
-        showError(childrenCount, "Enter valid children count", silent);
+      if (childrenCount && (childrenCount.value === "" || +childrenCount.value < 0 || +childrenCount.value > 5)) {
+        showError(childrenCount, "Enter valid children count (0-5)", silent);
         ok = false;
       }
     }
@@ -2072,14 +2245,11 @@ document.addEventListener("DOMContentLoaded", () => {
       ok = false;
     }
 
-    ["mobile1", "mobile2"].forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (!/^\d{10}$/.test(el.value)) {
-        showError(el, "Enter 10 digit mobile number", silent);
-        ok = false;
-      }
-    });
+    const alternateMobile = document.getElementById("mobile2_alt");
+    if (alternateMobile && alternateMobile.value && !/^\d{10}$/.test(alternateMobile.value)) {
+      showError(alternateMobile, "Enter 10 digit mobile number", silent);
+      ok = false;
+    }
 
     // ----- Gender -----
     const genderGroup = step.querySelector(".gender-group");
@@ -2128,16 +2298,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ----- Address Length -----
-    ["permanentAddress"].forEach(id => {
+    ["presentAddress", "permanentAddress"].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
-      if (
-        isBlank(el.value) ||
-        el.value.trim().length < 10 ||
-        el.value.trim().length > 25
-      ) {
-        showError(el, "Address must be 10–25 characters", silent);
+      
+      const label = id === "presentAddress" ? "Present" : "Permanent";
+      if (isBlank(el.value)) {
+        showError(el, `${label} address is required`, silent);
         ok = false;
+        return;
+      }
+      
+      if (!isBlank(el.value)) {
+        if (el.value.trim().length < 10 || el.value.trim().length > 200) {
+          showError(el, "Address must be 10–200 characters", silent);
+          ok = false;
+        }
       }
     });
 
@@ -2166,8 +2342,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ok = false;
     }
 
-    if (!realBankAccount || !/^\d{8,18}$/.test(realBankAccount)) {
-      showError(bankAccInput, "Required Account number(8-18 digits)", silent);
+    if (!realBankAccount || !/^\d{9,18}$/.test(realBankAccount)) {
+      showError(bankAccInput, "Required Account number (9-18 digits)", silent);
       ok = false;
     }
 
@@ -2317,6 +2493,25 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
     });
+
+    /* ===== Vehicle Validation ===== */
+    const ownVehicle = document.getElementById("ownVehicle");
+    const vehicleType = document.getElementById("vehicleType");
+    const vehicleRegNo = document.getElementById("vehicleRegNo");
+
+    if (!ownVehicle?.value) {
+      showError(ownVehicle, "Please select an option", silent);
+      ok = false;
+    } else if (ownVehicle.value === "Yes") {
+      if (!vehicleType?.value?.trim()) {
+        showError(vehicleType, "Vehicle type is required", silent);
+        ok = false;
+      }
+      if (!vehicleRegNo?.value?.trim()) {
+        showError(vehicleRegNo, "Registration number is required", silent);
+        ok = false;
+      }
+    }
 
     if (!ok && !silent) {
       showSummaryError(step, "Please correct the highlighted errors before continuing");
@@ -3221,8 +3416,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = {
       fullName: getCandidateFullName(),
       email: document.getElementById("email")?.value || "",
-      phone: document.getElementById("mobile1")?.value || "", // Permanent mobile
-      alternateMobile: document.getElementById("mobile2")?.value || "",
+      phone: document.getElementById("mobile1")?.value || "", 
+      alternateMobile: document.getElementById("mobile2_alt")?.value || "",
+      presentAddress: document.getElementById("presentAddress")?.value || "",
       dob: document.getElementById("dob")?.value || null,
       gender: document.querySelector("input[name='gender']:checked")?.value || "",
       placeOfBirth: document.getElementById("placeOfBirth")?.value || "",
@@ -3231,6 +3427,7 @@ document.addEventListener("DOMContentLoaded", () => {
       nationality: document.getElementById("nationality")?.value || "",
       fatherName: document.getElementById("fatherName")?.value || "",
       motherName: document.getElementById("motherName")?.value || "",
+      husbandName: document.getElementById("husbandName")?.value || "",
       maritalStatus: document.getElementById("maritalStatus")?.value || "",
       marriageDate: document.getElementById("marriageDate")?.value || null,
       childrenCount: parseInt(document.getElementById("childrenCount")?.value || "0"),
@@ -3243,11 +3440,15 @@ document.addEventListener("DOMContentLoaded", () => {
       weight: document.getElementById("weight")?.value || "",
       identificationMarks: document.getElementById("identification")?.value || "",
       eyesight: document.getElementById("eyesight")?.value || "",
-      bloodGroup: document.getElementById("bloodGroup")?.value || "",
       disability: document.getElementById("disability")?.value || "",
       illness: document.getElementById("illness")?.value || "",
       illnessName: document.getElementById("illnessName")?.value || "",
       illnessDuration: document.getElementById("illnessDuration")?.value || "",
+
+      // Vehicle
+      ownVehicle: document.getElementById("ownVehicle")?.value || "",
+      vehicleType: document.getElementById("vehicleType")?.value || "",
+      vehicleRegNo: document.getElementById("vehicleRegNo")?.value || "",
 
       // KYC
       aadhaar: realAadhaar || "",
@@ -3302,8 +3503,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Professional / Personal
       strengths: document.getElementById("strengths")?.value || "",
-      weaknesses: document.getElementById("Weaknesses")?.value || "",
-      valuesContent: document.getElementById("Values")?.value || "",
+      weaknesses: document.getElementById("weaknesses")?.value || "",
+      valuesContent: document.getElementById("values")?.value || "",
+      hrEmail: sessionStorage.getItem("prefilledHrEmail") || "",
 
       memberOfProfessionalBody: document.querySelector("[name='memberOfProfessionalBody']")?.value || "",
       professionalBodyDetails: document.querySelector("[name='memberOfProfessionalBody']")?.parentElement?.querySelector("textarea")?.value || "",

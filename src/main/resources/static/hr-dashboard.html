@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,13 @@
             --border: #e2e8f0;
             --text-muted: #64748b;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
 
         body {
             min-height: 100vh;
@@ -36,6 +43,7 @@
             z-index: 999;
             flex-direction: column;
         }
+
         .auth-card {
             background: white;
             padding: 55px 50px;
@@ -43,29 +51,78 @@
             width: 90%;
             max-width: 420px;
             text-align: center;
-            box-shadow: 0 40px 80px -15px rgba(0,0,0,0.4);
+            box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.4);
         }
-        .auth-logo { font-size: 48px; margin-bottom: 15px; }
-        .auth-card h2 { font-size: 26px; font-weight: 900; color: var(--primary); margin-bottom: 6px; }
-        .auth-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+
+        .auth-logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .auth-card h2 {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .auth-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
         .auth-card input {
-            width: 100%; padding: 15px; border: 2px solid var(--border);
-            border-radius: 14px; text-align: center;
-            outline: none; margin-bottom: 20px;
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            text-align: center;
+            outline: none;
+            margin-bottom: 20px;
             font-family: 'Outfit', sans-serif;
             transition: border-color 0.2s;
         }
-        .auth-card input[type="text"] { font-size: 18px; }
-        .auth-card input[type="password"] { font-size: 22px; letter-spacing: 8px; }
-        .auth-card input:focus { border-color: var(--primary); }
-        .btn-login {
-            width: 100%; padding: 16px; background: var(--primary);
-            color: white; border: none; border-radius: 14px; font-size: 16px;
-            font-weight: 700; cursor: pointer; letter-spacing: 1px;
-            transition: all 0.2s; font-family: 'Outfit', sans-serif;
+
+        .auth-card input[type="text"] {
+            font-size: 18px;
         }
-        .btn-login:hover { background: var(--primary-light); transform: translateY(-2px); }
-        #authError { color: #ef4444; font-size: 13px; margin-top: 12px; display: none; }
+
+        .auth-card input[type="password"] {
+            font-size: 22px;
+            letter-spacing: 8px;
+        }
+
+        .auth-card input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-login:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        #authError {
+            color: #ef4444;
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+        }
 
         /* ── Portal ── */
         #portalPage {
@@ -78,16 +135,29 @@
 
         nav {
             width: 100%;
-            background: rgba(255,255,255,0.07);
+            background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(10px);
             padding: 18px 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .nav-brand { color: white; font-size: 20px; font-weight: 800; letter-spacing: 0.5px; }
-        nav img { height: 50px; filter: brightness(0) invert(1); opacity: 0.85; }
+
+        .nav-brand {
+            color: white;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        nav img {
+            height: 62px;
+            background: white;
+            padding: 2px 6px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
 
         .portal-body {
             flex: 1;
@@ -103,8 +173,17 @@
             margin-bottom: 60px;
             color: white;
         }
-        .welcome-text h1 { font-size: 38px; font-weight: 900; margin-bottom: 10px; }
-        .welcome-text p { font-size: 16px; opacity: 0.7; }
+
+        .welcome-text h1 {
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            opacity: 0.7;
+        }
 
         .portal-buttons {
             display: flex;
@@ -125,27 +204,43 @@
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             text-align: left;
         }
+
         .portal-btn:hover {
             transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
         }
-        .portal-btn .icon { font-size: 42px; flex-shrink: 0; }
+
+        .portal-btn .icon {
+            font-size: 42px;
+            flex-shrink: 0;
+        }
+
         .portal-btn .btn-text h3 {
-            font-size: 20px; font-weight: 800;
-            color: var(--primary); margin-bottom: 4px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 4px;
         }
-        .portal-btn .btn-text p { font-size: 13px; color: var(--text-muted); }
+
+        .portal-btn .btn-text p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
         .portal-btn .arrow {
-            margin-left: auto; font-size: 22px; color: var(--primary); opacity: 0.4;
+            margin-left: auto;
+            font-size: 22px;
+            color: var(--primary);
+            opacity: 0.4;
         }
 
         .logout-btn {
             margin-top: 50px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
             padding: 10px 30px;
             border-radius: 30px;
@@ -154,41 +249,47 @@
             font-family: 'Outfit', sans-serif;
             transition: all 0.2s;
         }
-        .logout-btn:hover { background: rgba(255,255,255,0.25); }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
     </style>
 </head>
+
 <body>
 
     <!-- LOGIN OVERLAY -->
     <div id="authOverlay">
         <div class="auth-card" id="loginCard">
-            <div class="auth-logo">🏢</div>
+            <div class="auth-logo"></div>
             <h2>HR Portal Access</h2>
             <p>Enter your secure credentials to continue</p>
-            <input type="text" id="hrUsername" placeholder="Username" 
+            <input type="text" id="hrUsername" placeholder="Employee ID / Username"
                 onkeydown="if(event.key==='Enter') document.getElementById('hrPasscode').focus()">
             <input type="password" id="hrPasscode" placeholder="••••••••" maxlength="10"
                 onkeydown="if(event.key==='Enter') verifyHR()">
             <button class="btn-login" onclick="verifyHR()">ENTER PORTAL</button>
             <p id="authError">❌ Incorrect Username or Passcode.</p>
             <div style="margin-top:20px;">
-                <a href="#" onclick="togglePasswordChange(true)" style="color:var(--text-muted); font-size:13px; text-decoration:none;">Change Passcode</a>
+                <p style="color:var(--text-muted); font-size:13px;">New user? 
+                    <a href="#" onclick="toggleSignup(true)" style="color:var(--primary); font-weight:700; text-decoration:none;">Create Credentials</a>
+                </p>
             </div>
         </div>
 
-        <div class="auth-card" id="changePwCard" style="display:none;">
-            <div class="auth-logo">🔐</div>
-            <h2>Change Credentials</h2>
-            <p>Update your portal access username and passcode</p>
-            <input type="password" id="oldPasscode" placeholder="Old Passcode" maxlength="10">
-            <input type="text" id="newUsername" placeholder="New Username" 
-                onkeydown="if(event.key==='Enter') document.getElementById('newPasscode').focus()">
-            <input type="password" id="newPasscode" placeholder="New Passcode (min 5)" maxlength="10">
-            <input type="password" id="confirmPasscode" placeholder="Confirm New" maxlength="10">
-            <button class="btn-login" onclick="changePasscode()">UPDATE CREDENTIALS</button>
-            <p id="pwError" style="color:#ef4444; font-size:13px; margin-top:12px; display:none;"></p>
+        <div class="auth-card" id="signupCard" style="display:none;">
+            <div class="auth-logo">📝</div>
+            <h2>Create HR Account</h2>
+            <p>Register your employee details to access the portal</p>
+            <input type="text" id="regFullName" placeholder="Full Name (e.g. John Doe)">
+            <input type="text" id="regUsername" placeholder="Employee ID / Username">
+            <input type="password" id="regPasscode" placeholder="New Passcode (min 5)" maxlength="10">
+            <input type="password" id="regConfirmPasscode" placeholder="Confirm Passcode" maxlength="10">
+            <button class="btn-login" onclick="registerHR()">CREATE ACCOUNT</button>
+            <p id="regError" style="color:#ef4444; font-size:13px; margin-top:12px; display:none;"></p>
             <div style="margin-top:20px;">
-                <a href="#" onclick="togglePasswordChange(false)" style="color:var(--text-muted); font-size:13px; text-decoration:none;">Cancel & Back to Login</a>
+                <a href="#" onclick="toggleSignup(false)"
+                    style="color:var(--text-muted); font-size:13px; text-decoration:none;">Back to Login</a>
             </div>
         </div>
     </div>
@@ -197,7 +298,7 @@
     <div id="portalPage" style="display:none; flex-direction:column; align-items:center; width:100%; min-height:100vh;">
         <nav>
             <span class="nav-brand">HR Recruitment Portal</span>
-            <img src="logo.png" alt="Natco Pharma" onerror="this.style.display='none'">
+            <img src="logo.jpg" alt="Natco Pharma" onerror="this.style.display='none'">
         </nav>
 
         <div class="portal-body">
@@ -253,68 +354,106 @@
             return localStorage.getItem('hr_passcode_custom') || 'NATCO123';
         }
 
-        function verifyHR() {
-            const user = document.getElementById('hrUsername').value.trim().toLowerCase();
+        async function verifyHR() {
+            const user = document.getElementById('hrUsername').value.trim();
             const pin = document.getElementById('hrPasscode').value;
-            const expUser = getExpectedUsername().toLowerCase();
 
-            if (user === expUser && pin === getExpectedPasscode()) {
-                sessionStorage.setItem('hr_authed', 'true');
-                showPortal();
-            } else {
+            if (!user || !pin) {
                 const err = document.getElementById('authError');
-                err.innerText = '❌ Incorrect Username or Passcode.';
+                err.innerText = '❌ Username and Passcode are required.';
                 err.style.display = 'block';
-                document.getElementById('hrPasscode').value = '';
-                document.getElementById('hrPasscode').focus();
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/login/hr', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pin })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    sessionStorage.setItem('hr_authed', 'true');
+                    sessionStorage.setItem('hr_name', data.empName || user);
+                    sessionStorage.setItem('hr_code', data.empCode);
+                    showPortal();
+                } else {
+                    const err = document.getElementById('authError');
+                    err.innerText = '❌ ' + (data.message || 'Incorrect Username or Passcode.');
+                    err.style.display = 'block';
+                    document.getElementById('hrPasscode').value = '';
+                    document.getElementById('hrPasscode').focus();
+                }
+            } catch (e) {
+                const err = document.getElementById('authError');
+                err.innerText = '❌ Server connection failed.';
+                err.style.display = 'block';
             }
         }
 
-        function togglePasswordChange(show) {
+        function toggleSignup(show) {
             document.getElementById('loginCard').style.display = show ? 'none' : 'block';
-            document.getElementById('changePwCard').style.display = show ? 'block' : 'none';
-            document.getElementById('pwError').style.display = 'none';
-            document.getElementById('oldPasscode').value = '';
-            document.getElementById('newUsername').value = '';
-            document.getElementById('newPasscode').value = '';
-            document.getElementById('confirmPasscode').value = '';
+            document.getElementById('signupCard').style.display = show ? 'block' : 'none';
+            document.getElementById('authError').style.display = 'none';
+            document.getElementById('regError').style.display = 'none';
         }
 
-        function changePasscode() {
-            const oldP = document.getElementById('oldPasscode').value;
-            const newU = document.getElementById('newUsername').value.trim();
-            const newP = document.getElementById('newPasscode').value;
-            const confP = document.getElementById('confirmPasscode').value;
-            const err = document.getElementById('pwError');
+        async function registerHR() {
+            const name = document.getElementById('regFullName').value.trim();
+            const user = document.getElementById('regUsername').value.trim();
+            const pin = document.getElementById('regPasscode').value;
+            const conf = document.getElementById('regConfirmPasscode').value;
+            const err = document.getElementById('regError');
 
-            if (oldP !== getExpectedPasscode()) {
-                err.innerText = "❌ Old passcode is incorrect.";
+            if (!name || !user || !pin || !conf) {
+                err.innerText = "❌ All fields are required.";
                 err.style.display = "block";
                 return;
             }
-            if (newU.length < 3) {
-                err.innerText = "❌ New username must be at least 3 characters.";
+            if (pin.length < 5) {
+                err.innerText = "❌ Passcode must be at least 5 characters.";
                 err.style.display = "block";
                 return;
             }
-            if (newP.length < 5) {
-                err.innerText = "❌ New passcode must be at least 5 characters.";
-                err.style.display = "block";
-                return;
-            }
-            if (newP !== confP) {
-                err.innerText = "❌ New passcodes do not match.";
+            if (pin !== conf) {
+                err.innerText = "❌ Passcodes do not match.";
                 err.style.display = "block";
                 return;
             }
 
-            localStorage.setItem('hr_username_custom', newU);
-            localStorage.setItem('hr_passcode_custom', newP);
-            alert("✅ Credentials updated successfully! Please login with your new credentials.");
-            togglePasswordChange(false);
+            try {
+                const res = await fetch('/api/login/hr/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        username: user, 
+                        password: pin,
+                        empName: name 
+                    })
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    alert("✅ Account created successfully! Please login.");
+                    toggleSignup(false);
+                    document.getElementById('hrUsername').value = user;
+                } else {
+                    err.innerText = "❌ " + (data.message || "Registration failed.");
+                    err.style.display = "block";
+                }
+            } catch (e) {
+                err.innerText = "❌ Server connection failed.";
+                err.style.display = "block";
+            }
         }
 
         function showPortal() {
+            const hrName = sessionStorage.getItem('hr_name') || 'Associate';
+            const welcomeTitle = document.querySelector('.welcome-text h1');
+            if (welcomeTitle) welcomeTitle.innerText = `Welcome, ${hrName}`;
+            
             document.getElementById('authOverlay').style.display = 'none';
             document.getElementById('portalPage').style.display = 'flex';
         }
@@ -337,4 +476,5 @@
         checkAuth();
     </script>
 </body>
+
 </html>

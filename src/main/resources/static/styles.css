@@ -158,7 +158,7 @@ body {
 }
 
 .nav-logo {
-  height: 100px;
+  height: 40px;
 }
 
 /* ================= LAYOUT ================= */
@@ -458,7 +458,6 @@ textarea.error,
   font-size: 13px !important;
   margin-top: 5px !important;
   font-weight: 600 !important;
-  display: block !important;
 }
 
 .form-step.shake {
@@ -911,7 +910,7 @@ textarea.error,
   }
 
   .nav-logo {
-    height: 60px;
+    height: 40px;
     margin-top: 10px;
   }
 

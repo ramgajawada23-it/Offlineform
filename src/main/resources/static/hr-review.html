@@ -222,7 +222,7 @@
 
     <div class="page">
         <div class="doc-header">
-            <img src="logo.png" class="logo">
+            <img src="logo.jpg" class="logo">
             <div class="doc-title">Employment Application Form<br><small id="docRef"
                     style="font-weight:400; color:#64748b;"></small></div>
         </div>
@@ -254,6 +254,8 @@
                     id="f_father"></span></div>
             <div class="field-row"><span class="field-label">Mother's Name</span><span class="field-value"
                     id="f_mother"></span></div>
+            <div class="field-row"><span class="field-label">Husband's Name</span><span class="field-value"
+                    id="f_husband"></span></div>
             <div class="field-row full-width"><span class="field-label">Permanent Address</span><span
                     class="field-value" id="f_addr"></span></div>
             <div class="field-row"><span class="field-label">Email</span><span class="field-value" id="f_email"></span>
@@ -262,6 +264,12 @@
                     id="f_phone"></span></div>
             <div class="field-row"><span class="field-label">Alternate Mobile</span><span class="field-value"
                     id="f_altPhone"></span></div>
+            <div class="field-row"><span class="field-label">Own Vehicle?</span><span class="field-value"
+                    id="f_ownVehicle"></span></div>
+            <div class="field-row"><span class="field-label">Vehicle Type</span><span class="field-value"
+                    id="f_vehicleType"></span></div>
+            <div class="field-row"><span class="field-label">Reg. No</span><span class="field-value"
+                    id="f_vehicleRegNo"></span></div>
         </div>
 
         <div class="section-head">II. Physical Attributes & Health</div>
@@ -659,10 +667,14 @@
                 document.getElementById('f_children').innerText = val(c.childrenCount);
                 document.getElementById('f_father').innerText = val(c.fatherName);
                 document.getElementById('f_mother').innerText = val(c.motherName);
+                document.getElementById('f_husband').innerText = val(c.husbandName);
                 document.getElementById('f_addr').innerText = val(c.permanentAddress);
                 document.getElementById('f_email').innerText = val(c.email);
                 document.getElementById('f_phone').innerText = val(c.phone);
                 document.getElementById('f_altPhone').innerText = val(c.alternateMobile);
+                document.getElementById('f_ownVehicle').innerText = val(c.ownVehicle);
+                document.getElementById('f_vehicleType').innerText = val(c.vehicleType);
+                document.getElementById('f_vehicleRegNo').innerText = val(c.vehicleRegNo);
 
                 // Health
                 document.getElementById('f_height').innerText = val(c.height);
